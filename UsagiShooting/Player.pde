@@ -8,6 +8,7 @@ class Player{
   
   private int zanki;    //残機
   private int status;    //ステータス
+  private int mutekiTime;  //無敵時間
   
   //**コンストラクタ
   Player(float locationX,float locationY){
@@ -18,7 +19,8 @@ class Player{
     
     vpf = 3.0;
     zanki = 5;
-    status = Const.STATUS_NON;
+    status = Const.STATUS_PLAYER_NON;
+    mutekiTime = 0;
     
   }
   
@@ -31,11 +33,17 @@ class Player{
     
     /*自機描画*/
     noStroke();
-    fill(255);
+    if(status != Const.STATUS_PLAYER_MUTEKI){
+      //通常
+      fill(255);
+    }else{
+      //被弾後無敵状態
+      fill(234,85,80);
+    }
     ellipse(location.x,location.y,10,10);
     
     /*ショット描画*/
-    if(status == Const.STATUS_SHOOT){
+    if(status == Const.STATUS_PLAYER_SHOOT){
       stroke(255,64);
       strokeWeight(5);
       line(location.x,location.y,location.x,Const.HEIGHT_INFO);
@@ -43,10 +51,32 @@ class Player{
     
     /*残機数描画*/
     noStroke();
+    fill(255);
     for(int i=0; i<zanki; i++){
       rect(400 + (i*40),20,20,20);
     }
     
+  }
+  
+  /*被弾処理*/
+  void hit(){
+    //残機マイナス
+    zanki -= 1;
+    //無敵時間開始
+    if(status != Const.STATUS_PLAYER_MUTEKI){
+      status = Const.STATUS_PLAYER_MUTEKI;
+    }
+  }
+  
+  /*敵機への衝突処理*/
+  void hitEnemy(Enemy e){
+    //残機マイナス
+    zanki -= 1;
+    //敵機の弾幕を初期化
+    e.deleteAllBullet();
+    //自機の位置を初期化
+    location.x = width/2;
+    location.y = height*4/5;
   }
   
   //**移動方向リストに追加
@@ -102,8 +132,22 @@ class Player{
     
     switch(key){
       case Const.KEY_SHOOT:
-      status = (keyFlg == Const.KEY_FLG_PRESS ? Const.STATUS_SHOOT : Const.STATUS_NON);
+      status = (keyFlg == Const.KEY_FLG_PRESS ? Const.STATUS_PLAYER_SHOOT : Const.STATUS_PLAYER_NON);
       break;
+    }
+    
+  }
+  
+  //**時間経過によるステータス制御
+  void updateStatusByTime(){
+    
+    //無敵時間継続判定
+    if(status == Const.STATUS_PLAYER_MUTEKI){
+      mutekiTime += 1;
+      if(mutekiTime >= Const.MUTEKI_TIME_PLAYER){
+        mutekiTime = 0;
+        status = Const.STATUS_PLAYER_NON;
+      }
     }
     
   }
@@ -164,6 +208,14 @@ class Player{
   
   int getStatus(){
     return status;
+  }
+  
+  int getNoHitTime(){
+    return mutekiTime;
+  }
+  
+  int getZanki(){
+    return zanki;
   }
   
   PVector getLocation(){

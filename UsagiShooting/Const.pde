@@ -2,6 +2,10 @@
 
 class Const{
   
+  //モード
+  final static int MODE_DEV = 0;  //(ゲームオーバーにならない)
+  final static int MODE_PRO = 1;
+  
   //シーン番号
   final static int SCENE_NO_TITLE = 0;
   final static int SCENE_NO_OPENING = 1;
@@ -15,9 +19,14 @@ class Const{
   final static int CHAPTER_NUM = 5;
   
   //自機ステータス
-  final static int STATUS_NON = 0;  //ノーショット状態
-  final static int STATUS_SHOOT = 1;  //ショット状態
-  final static int STATUS_BOM = 2;  //ボム状態(未実装)
+  final static int STATUS_PLAYER_NON = 0;      //ノーショット状態
+  final static int STATUS_PLAYER_SHOOT = 1;    //ショット状態
+  final static int STATUS_PLAYER_BOM = 2;      //ボム状態(未実装)
+  final static int STATUS_PLAYER_MUTEKI = 3;   //被弾後無敵時間
+  
+  //敵機ステータス
+  final static int STATUS_ENEMY_ACTIVE = 0;        //アクティブ状態：撃破前 もしくは 画面内にいる状態(=プレイヤーから可視)
+  final static int STATUS_ENEMY_NOT_ACTIVE = 1;    //非アクティブ状態：撃破後 もしくは 画面からアウト状態(=プレイヤーから不可視)
   
   //上部情報画面
   final static float HEIGHT_INFO = 50.0;
@@ -34,6 +43,11 @@ class Const{
   final static int DIRECTION_DOWN = 2;
   final static int DIRECTION_LEFT = 3;
   final static int DIRECTION_RIGHT = 4;
-      
+  
+  //自機当たり判定の半径
+  final static float RANGE_HIT_PLAYER = 5.0;
+  
+  //自機被弾後の無敵時間(フレーム数)
+  final static int MUTEKI_TIME_PLAYER = 60;
 
 }

@@ -1,6 +1,10 @@
 
 /** ★★★うさぎシューティング★★★ **/
 
+//モード
+int mode = Const.MODE_DEV;
+//int mode = Const.MODE_PRO;
+
 //シーン番号
 int sceneNo = Const.SCENE_NO_TITLE;
 
@@ -11,13 +15,22 @@ ArrayList<Chapter> chapterList;
 
 
 void setup(){
+  
   size(600,750);
+  
   op = new Opening();
+  
+  /*自機生成*/
   player = new Player(width/2,height*4/5);
+  
+  /*チャプターリスト生成*/
   chapterList = new ArrayList<Chapter>();
-  for(int i=0; i<Const.CHAPTER_NUM; i++){
-    chapterList.add(new Chapter(i+1));
-  }
+  chapterList.add(new Chapter1());
+  
+  /*初回チャプターのみ、先に敵リストを生成する*/
+  Chapter ch = chapterList.get(0);
+  ch.createEnemy(player);
+
 }
 
 void draw(){
@@ -34,7 +47,7 @@ void draw(){
        /*オープニング画面(カウントダウン)を描画*/
        int count = op.drawOpening();
        if(count == 0){
-         sceneNo = 2;
+         sceneNo = Const.SCENE_NO_STAGE;
        }
        break;
 
@@ -51,6 +64,9 @@ void draw(){
        break;
 
      case Const.SCENE_NO_CLEAR:
+       break;
+       
+     case Const.SCENE_NO_GAMEOVER:
        break;
   }
 }
@@ -87,9 +103,6 @@ void execGame(){
   fill(127);
   rect(0,0,width,Const.HEIGHT_INFO);
   
-  /*自機を描画*/
-  player.draw();
-  
   /*チャプターを実行準備*/
   Chapter ch = chapterList.get(0);
   
@@ -104,16 +117,25 @@ void execGame(){
     //全てのチャプターが終了した場合はゲームクリア
     if(chapterList.size() == 0){
       println("game clear");
+      sceneNo = Const.SCENE_NO_PRE_BOSS;
       return;
     }
     
     //次のチャプターの敵インスタンスの準備
     ch = chapterList.get(0);
-    ch.createEnemy();
+    ch.createEnemy(player);
     
   }
   
   /*チャプターを実行*/
   ch.exec(player);
+
+  /*自機を描画*/
+  player.draw();
+
+  /*ゲームオーバー判定*/
+  if(mode == Const.MODE_PRO && player.getZanki() <= -1){
+    sceneNo = Const.SCENE_NO_GAMEOVER;
+  }
   
 }
