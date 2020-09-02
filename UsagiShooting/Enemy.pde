@@ -13,7 +13,7 @@ abstract class Enemy{
   Enemy(float hp,PVector location,PVector direction){
     
     //個別セット
-    this.status = Const.STATUS_ENEMY_ACTIVE;
+    this.status = Const.STATUS_ENEMY_WAIT;
     this.hp = hp;
     this.location = location;
     this.direction = direction;
@@ -77,17 +77,31 @@ abstract class Enemy{
     }   
     return false;
   }
+
+  //**敵機の画面外判定
+  boolean isOutOfScreen(){
+    if(status == Const.STATUS_ENEMY_NOT_ACTIVE){
+      return false;
+    }
+    if(location.x < 0 || location.x > width){
+      return true;
+    }
+    if(location.y < 0 || location.y > height){
+      return true;
+    }
+    return false;
+  }
   
   //**弾幕を初期化
   void deleteAllBullet(){
     bulletHell.deleteAllBullet();
   }
   
-  //**敵機の削除判定
-  boolean isDeletable(){
+  //**敵機の処理終了判定
+  boolean isDone(){
     //すべての弾が画面からアウトしたら敵機削除可能
     if(status == Const.STATUS_ENEMY_NOT_ACTIVE && bulletHell.getBulletList().size() == 0){
-      println("敵機削除可能");
+      println("敵機処理終了");
       return true;
     }
     return false;

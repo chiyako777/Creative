@@ -72,7 +72,7 @@ class AllRoundBullletHell extends BulletHell{
   void draw(int status){
       
     float angle;         //弾幕の角度
-    float velocity = 2;  //弾幕の速度
+    float velocity = 3;  //弾幕の速度
     
     //1秒毎に弾インスタンスを生成する(敵機がアクティブの場合)
     if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%60 == 0){
@@ -93,6 +93,7 @@ class AllRoundBullletHell extends BulletHell{
   
 }
 
+/*------------------------------------------------------------*/
 /* 自機狙い弾幕クラス */
 class TargetingBulletHell extends BulletHell{
     PVector enemyLocation;  //敵機位置
@@ -109,11 +110,20 @@ class TargetingBulletHell extends BulletHell{
   void draw(int status){
     
     float angle;         //弾幕の角度
-    float velocity = 4;  //弾幕の速度
+    float velocity = 6;  //弾幕の速度
+    
+    float enemyY;
+    float enemyX;
+    float playerY;
+    float playerX;
     
     //2フレーム毎に弾インスタンスを生成する(敵機がアクティブの場合)
-    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%2 == 0){
-      angle = atan2(playerLocation.y - enemyLocation.y,playerLocation.x - enemyLocation.x);
+    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%5 == 0){
+      enemyY = enemyLocation.y;
+      enemyX = enemyLocation.x;
+      playerY = playerLocation.y;
+      playerX = playerLocation.x;
+      angle = atan2(playerY - enemyY,playerX - enemyX);  
       //小弾：始点位置は敵機の座標、向きは自機の位置
       bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angle)*velocity,sin(angle)*velocity)));
     }

@@ -16,7 +16,7 @@ abstract class Bullet{
   
   //** 弾の位置を更新
   void updateLocation(){
-    location.add(velocity);
+    location.add(velocity); //<>//
   }
   
   //**自機への当たり判定

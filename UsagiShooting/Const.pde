@@ -25,8 +25,12 @@ class Const{
   final static int STATUS_PLAYER_MUTEKI = 3;   //被弾後無敵時間
   
   //敵機ステータス
-  final static int STATUS_ENEMY_ACTIVE = 0;        //アクティブ状態：撃破前 もしくは 画面内にいる状態(=プレイヤーから可視)
-  final static int STATUS_ENEMY_NOT_ACTIVE = 1;    //非アクティブ状態：撃破後 もしくは 画面からアウト状態(=プレイヤーから不可視)
+  final static int STATUS_ENEMY_WAIT = 0;          //待機状態
+  final static int STATUS_ENEMY_ACTIVE = 1;        //アクティブ状態(プレイヤーから見えている状態の敵)
+  final static int STATUS_ENEMY_NOT_ACTIVE = 2;    //非アクティブ状態(撃破済み、画面アウト、元から不可視の敵などで　プレイヤーから見えてない状態の敵)
+                                                   //※敵機が消えても弾幕は生きていることがある
+  final static int STATUS_ENEMY_DONE = 3;          //終了状態
+  
   
   //上部情報画面
   final static float HEIGHT_INFO = 50.0;
