@@ -71,7 +71,6 @@ abstract class Enemy{
      //自機位置が敵機当たり範囲内
     if(player.getLocation().x > location.x - range && player.getLocation().x < location.x + range){
       if(player.getLocation().y > location.y - range && player.getLocation().y < location.y + range){
-        //println("敵機本体に衝突");
         return true;
       }
     }   
@@ -101,7 +100,6 @@ abstract class Enemy{
   boolean isDone(){
     //すべての弾が画面からアウトしたら敵機削除可能
     if(status == Const.STATUS_ENEMY_NOT_ACTIVE && bulletHell.getBulletList().size() == 0){
-      println("敵機処理終了");
       return true;
     }
     return false;
@@ -175,4 +173,35 @@ class Enemy002 extends Enemy{
     }
   }
   
+}
+
+/*------------------------------------------------------------*/
+/*敵機タイプ③　丸型敵機:ランダム水滴弾射出　*/
+class Enemy003 extends Enemy{
+
+  //**コンストラクタ
+  Enemy003(float hp,PVector location,PVector direction){
+    super(hp,location,direction);
+    range = 10.0;
+    //ランダム水滴弾幕生成(敵機位置)
+    bulletHell = new WaterDropBulletHell(this.location);
+  }
+
+  //**敵機の位置を更新
+  void updateLocation(){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      if(location.y < 100){
+        location.add(direction);    
+      }
+    }
+  }
+  
+  //**敵機を描画
+  void draw(){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      fill(255,247,153);
+      ellipse(location.x,location.y,20,20);
+    }
+  }
+   
 }

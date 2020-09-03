@@ -79,7 +79,9 @@ class AllRoundBullletHell extends BulletHell{
       for(int i=0; i<num;i++){
         angle = 2*PI/num * (i+1);
         //小弾：始点位置は敵機の座標、向きは全方位
-        bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angle)*velocity,sin(angle)*velocity)));         
+        bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y)
+                                        ,new PVector(cos(angle)*velocity,sin(angle)*velocity)
+                                        ,null));         
       }
     }
      
@@ -117,15 +119,17 @@ class TargetingBulletHell extends BulletHell{
     float playerY;
     float playerX;
     
-    //2フレーム毎に弾インスタンスを生成する(敵機がアクティブの場合)
-    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%5 == 0){
+    //一定間隔で弾インスタンスを生成する(敵機がアクティブの場合)
+    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%20 == 0){
       enemyY = enemyLocation.y;
       enemyX = enemyLocation.x;
       playerY = playerLocation.y;
       playerX = playerLocation.x;
       angle = atan2(playerY - enemyY,playerX - enemyX);  
       //小弾：始点位置は敵機の座標、向きは自機の位置
-      bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angle)*velocity,sin(angle)*velocity)));
+      bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y)
+                      ,new PVector(cos(angle)*velocity,sin(angle)*velocity)
+                      ,null));
     }
     
     //描画
@@ -136,4 +140,41 @@ class TargetingBulletHell extends BulletHell{
 
   }
 
+}
+
+/*------------------------------------------------------------*/
+/* ランダム落下水滴弾幕クラス */
+class WaterDropBulletHell extends BulletHell{
+  PVector enemyLocation;  //敵機位置
+
+  //**コンストラクタ
+  WaterDropBulletHell(PVector enemyLocation){
+    super();
+    this.enemyLocation = enemyLocation;
+  }
+  
+  //**弾幕を描画
+  void draw(int status){
+    
+    float angle;         //弾幕の角度
+    float velocity = 2.5;  //弾幕の速度
+    
+    //一定間隔で弾インスタンスを生成する(敵機がアクティブの場合)
+    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%3 == 0){
+      angle = random(2*PI);
+      //小弾：始点位置は敵機の座標、向きはランダム、重力あり
+      bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y)
+                      ,new PVector(cos(angle)*velocity,sin(angle)*velocity)
+                      ,new PVector(0.0,1.0)));
+      
+    }
+    
+    //描画
+    drawBulletHell();
+    
+    //画面外に出た弾のインスタンス削除
+    deleteBullet();
+    
+  }
+ 
 }

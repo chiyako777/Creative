@@ -2,12 +2,18 @@
 abstract class Bullet{
   protected PVector location;  //位置ベクトル
   protected PVector velocity;  //速度ベクトル
+  protected PVector gravity;   //重力ベクトル
   protected float range;    //弾の当たり判定範囲
   
   //** コンストラクタ
-  Bullet(PVector location,PVector velocity){
+  Bullet(PVector location,PVector velocity,PVector gravity){
     this.location = location;
     this.velocity = velocity;
+    if(gravity != null){
+      this.gravity = gravity;
+    }else{
+      this.gravity = new PVector(0.0,0.0);  //重力不使用
+    }
     this.range = 0.0;
   }
   
@@ -17,6 +23,7 @@ abstract class Bullet{
   //** 弾の位置を更新
   void updateLocation(){
     location.add(velocity); //<>//
+    location.add(gravity);
   }
   
   //**自機への当たり判定
@@ -60,8 +67,8 @@ abstract class Bullet{
 class SmallBullet extends Bullet{
   
   //** コンストラクタ
-  SmallBullet(PVector location,PVector velocity){
-    super(location,velocity);
+  SmallBullet(PVector location,PVector velocity,PVector gravity){
+    super(location,velocity,gravity);
     this.range = 2.5;
   }
   
