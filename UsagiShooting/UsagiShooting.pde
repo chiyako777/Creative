@@ -25,8 +25,9 @@ void setup(){
   
   /*チャプターリスト生成*/
   chapterList = new ArrayList<Chapter>();
-  chapterList.add(new Chapter1());
-  chapterList.add(new Chapter2());
+  //chapterList.add(new Chapter1());
+  //chapterList.add(new Chapter2());
+  chapterList.add(new Chapter3());
   
   /*初回チャプターのみ、先に敵リストを生成する*/
   Chapter ch = chapterList.get(0);

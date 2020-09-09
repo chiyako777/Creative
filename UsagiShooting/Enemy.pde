@@ -1,13 +1,14 @@
 /*敵機クラス(基底)*/
 abstract class Enemy{
   
-  //※派生クラスからも使用できるようにするため、protected
   protected float hp;  //体力
   protected int status;  //ステータス
-  protected float range;  //当たり判定の半径
+  protected float range;  //敵機当たり判定の半径
   protected PVector location;  //敵機の位置ベクトル
   protected PVector direction;  //敵機の移動方向ベクトル
-  protected BulletHell bulletHell;  //弾幕オブジェクト(注：敵機に紐づく弾幕は敵機撃破と同時に消滅)
+  protected int activeTime = 0;  //アクティブ時間(フレーム数)
+  
+  protected BulletHell bulletHell;  //弾幕オブジェクト
   
   //**コンストラクタ
   Enemy(float hp,PVector location,PVector direction){
@@ -98,10 +99,13 @@ abstract class Enemy{
   
   //**敵機の処理終了判定
   boolean isDone(){
-    //すべての弾が画面からアウトしたら敵機削除可能
-    if(status == Const.STATUS_ENEMY_NOT_ACTIVE && bulletHell.getBulletList().size() == 0){
-      return true;
-    }
+    //非アクティブ状態
+    if(status == Const.STATUS_ENEMY_NOT_ACTIVE){
+      //全ての弾・レーザーの処理が終了している
+      if(bulletHell.getBulletList().size() == 0 && bulletHell.getLaserList().size() == 0){
+        return true;
+      }
+    }    
     return false;
   }
   
@@ -112,7 +116,9 @@ abstract class Enemy{
   void setStatus(int status){
     this.status = status;
   }
-  
+  int getActiveTime(){
+    return activeTime;
+  }
 }
 
 
@@ -140,7 +146,9 @@ class Enemy001 extends Enemy{
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
+      noStroke();
       ellipse(location.x,location.y,20,20);
+      activeTime += 1;
     }
   }
   
@@ -169,7 +177,9 @@ class Enemy002 extends Enemy{
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
+      noStroke();
       ellipse(location.x,location.y,20,20);
+      activeTime += 1;
     }
   }
   
@@ -200,8 +210,38 @@ class Enemy003 extends Enemy{
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
+      noStroke();
       ellipse(location.x,location.y,20,20);
+      activeTime += 1;
     }
   }
    
+}
+
+/*------------------------------------------------------------*/
+/*敵機タイプ④　テスト：放射レーザー(細)　*/
+class Enemy004 extends Enemy{
+
+  //**コンストラクタ
+  Enemy004(float hp,PVector location,PVector direction,int laserNum ,int rotateFlg){
+    super(hp,location,direction);
+    range = 10.0;
+    bulletHell = new AllRoundLaserBulletHell(this.location,3,laserNum,750,rotateFlg);
+  }
+  
+  //**敵機の位置を更新
+  void updateLocation(){
+    location.add(direction);
+  }
+  
+  //**敵機を描画
+  void draw(){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      fill(255,247,153);
+      noStroke();
+      ellipse(location.x,location.y,20,20);
+      activeTime += 1;
+    }
+  }
+  
 }

@@ -63,6 +63,7 @@ abstract class Bullet{
   
 }
 
+/*------------------------------------------------------------*/
 /* 小弾クラス */
 class SmallBullet extends Bullet{
   
@@ -75,6 +76,7 @@ class SmallBullet extends Bullet{
   //** 弾を描画
   void draw(){
     fill(65,105,225);
+    noStroke();
     ellipse(location.x,location.y,10,10);
   }
   

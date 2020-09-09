@@ -27,8 +27,9 @@ class Const{
   //敵機ステータス
   final static int STATUS_ENEMY_WAIT = 0;          //待機状態
   final static int STATUS_ENEMY_ACTIVE = 1;        //アクティブ状態(プレイヤーから見えている状態の敵)
-  final static int STATUS_ENEMY_NOT_ACTIVE = 2;    //非アクティブ状態(撃破済み、画面アウト、元から不可視の敵などで　プレイヤーから見えてない状態の敵)
+  final static int STATUS_ENEMY_NOT_ACTIVE = 2;    //非アクティブ状態(撃破済み、画面アウトなどで　プレイヤーから見えてない状態の敵)　
                                                    //※敵機が消えても弾幕は生きていることがある
+                                                   //※元から非描画の敵を非アクティブ状態に含めるかは要検討
   final static int STATUS_ENEMY_DONE = 3;          //終了状態
   
   
@@ -54,4 +55,16 @@ class Const{
   //自機被弾後の無敵時間(フレーム数)
   final static int MUTEKI_TIME_PLAYER = 60;
 
+  //レーザー弾回転有無
+  final static int LASER_ROTATE_OFF = 0;
+  final static int LASER_ROTATE_CLOCKWISE = 1;          //時計回り
+  final static int LASER_ROTATE_COUNTER_CLOCKWISE = 2;  //反時計回り
+  
+  //レーザーステータス
+  final static int LASER_STATUS_PRE = 1;    //予告状態
+  final static int LASER_STATUS_SHOOT = 2;  //実ショット状態
+ 
+  //レーザー予告時間
+  final static int LASER_PRE_TIME_NORMAL = 60;  //通常(60フレーム)
+  
 }

@@ -2,10 +2,12 @@
 abstract class BulletHell{
   
   protected ArrayList<Bullet> bulletList;  //弾リスト
+  protected ArrayList<Laser> laserList;  //レーザーリスト
   
   //**コンストラクタ
   BulletHell(){
     bulletList = new ArrayList<Bullet>();
+    laserList = new ArrayList<Laser>();
   }
   
   //**弾幕を描画
@@ -13,21 +15,38 @@ abstract class BulletHell{
   
   //**描画処理
   void drawBulletHell(){
+    
+    //弾
     if(bulletList.size() != 0){
       for(Bullet b :bulletList){
         b.updateLocation();
         b.draw();
       }
     }
+    
+    //レーザー
+    if(laserList.size() != 0){
+      for(Laser l : laserList){
+        l.draw();
+      }
+    }
+    
   }
   
   //**自機への当たり判定
   boolean isHitToPlayer(Player player){
+    //弾
     for(Bullet b : bulletList){
       if(b.isHitToPlayer(player)){
         return true;
       }
     }
+    //レーザー
+    for(Laser l : laserList){
+      if(l.isHitToPlayer(player)){
+        return true;
+      }
+    }    
     return false;
   }
   
@@ -43,18 +62,22 @@ abstract class BulletHell{
   //**弾幕を全消去
   void deleteAllBullet(){
     bulletList.clear();
+    laserList.clear();
   }
 
   /*getter,setter*/
   ArrayList<Bullet> getBulletList(){
     return bulletList;
   }
+  ArrayList<Laser> getLaserList(){
+    return laserList;
+  }
   
 }
 
 /*------------------------------------------------------------*/
 /* 全方位弾幕クラス */
-//本当は弾種類をコンストラクタ経由でカスタマイズできるようにして、全方位弾なら全部このクラス使えるようにしたい。。
+//本当は弾種類をコンストラクタ経由でカスタマイズできるようにして、全方位弾なら全部このクラス使えるようにしたい。
 //リフレクションが前うまく使えなかったのよね。。
 class AllRoundBullletHell extends BulletHell{
   
@@ -165,8 +188,7 @@ class WaterDropBulletHell extends BulletHell{
       //小弾：始点位置は敵機の座標、向きはランダム、重力あり
       bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y)
                       ,new PVector(cos(angle)*velocity,sin(angle)*velocity)
-                      ,new PVector(0.0,1.0)));
-      
+                      ,new PVector(0.0,1.0))); 
     }
     
     //描画
@@ -177,4 +199,76 @@ class WaterDropBulletHell extends BulletHell{
     
   }
  
+}
+
+/*------------------------------------------------------------*/
+/* 放射レーザー弾幕クラス */
+class AllRoundLaserBulletHell extends BulletHell{
+  PVector enemyLocation;  //敵機位置
+  int num;      //レーザー本数
+  float laserLen;  //レーザー長さ
+  int rotateFlg;  //回転フラグ
+  
+  float rotateCnt = 0.0;  //回転係数
+  
+
+  //**コンストラクタ
+  AllRoundLaserBulletHell(PVector enemyLocation,float laserRange,int num,float laserLen,int rotateFlg){
+    super();
+    this.enemyLocation = enemyLocation;
+    this.num = num;
+    this.laserLen = laserLen;
+    this.rotateFlg = rotateFlg;
+    
+    //レーザー生成(※途中での生成はないものとする)
+    for(int i=0;i<this.num;i++){
+      float angle = (2*PI/this.num) * i;
+      laserList.add(new NormalLaser(new PVector(this.enemyLocation.x,this.enemyLocation.y)
+                                    ,new PVector((cos(angle)*this.laserLen)+this.enemyLocation.x,(sin(angle)*this.laserLen)+this.enemyLocation.y)
+                                    ,laserRange));
+    }
+    
+  }
+
+  //**弾幕を描画
+  void draw(int status){
+    
+    float angle = 0.0;  //回転角度
+    float addAngle = 0.0;//回転角度増分
+    boolean angleUpdateFlg = false;  //角度更新フラグ
+    
+    if(rotateFlg == Const.LASER_ROTATE_OFF){
+      drawBulletHell();
+     
+    }else{
+      
+      for(int i=0;i<num;i++){
+        
+        Laser l = laserList.get(i);
+        if(l.getStatus() == Const.LASER_STATUS_SHOOT){
+          angleUpdateFlg = true;
+          //角度を回転させる
+          addAngle = (2*PI/360) * rotateCnt;
+          if(rotateFlg == Const.LASER_ROTATE_CLOCKWISE){
+            angle = (2*PI/num) * i + addAngle;
+          }else if(rotateFlg == Const.LASER_ROTATE_COUNTER_CLOCKWISE){
+            angle = (2*PI/num) * i - addAngle;
+          }
+          //レーザーの終点位置を更新
+          l.setEndPoint(new PVector((cos(angle)*this.laserLen)+this.enemyLocation.x,(sin(angle)*this.laserLen)+this.enemyLocation.y));
+        }
+        
+      }
+      
+      drawBulletHell();
+      
+      if(angleUpdateFlg){
+        //回転分の角度を更新(1フレームで0.2°回転)
+        rotateCnt = ( rotateCnt >= 360 ? 0 : rotateCnt + 0.2);
+      }
+      
+    }
+    
+  }
+    
 }
