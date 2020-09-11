@@ -263,8 +263,8 @@ class AllRoundLaserBulletHell extends BulletHell{
       drawBulletHell();
       
       if(angleUpdateFlg){
-        //回転分の角度を更新(1フレームで0.2°回転)
-        rotateCnt = ( rotateCnt >= 360 ? 0 : rotateCnt + 0.2);
+        //回転分の角度を更新(1フレームで0.1°回転)
+        rotateCnt = ( rotateCnt >= 360 ? 0 : rotateCnt + 0.1);
       }
       
     }

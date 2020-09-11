@@ -9,7 +9,7 @@ class Const{
   //シーン番号
   final static int SCENE_NO_TITLE = 0;
   final static int SCENE_NO_OPENING = 1;
-  final static int SCENE_NO_STAGE = 2;
+  final static int SCENE_NO_STAGE1 = 2;
   final static int SCENE_NO_PRE_BOSS = 3;
   final static int SCENE_NO_BOSS = 4;
   final static int SCENE_NO_CLEAR = 5;
@@ -66,5 +66,7 @@ class Const{
  
   //レーザー予告時間
   final static int LASER_PRE_TIME_NORMAL = 60;  //通常(60フレーム)
-  
+ 
+  //敵機タイムアウト
+  final static int TIMEOUT_ENEMY_INVALID = 0;  //敵機タイムアウト時間(無効) 
 }

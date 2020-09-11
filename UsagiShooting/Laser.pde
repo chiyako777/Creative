@@ -118,7 +118,7 @@ class NormalLaser extends Laser{
     /*予告線*/
     if(status == Const.LASER_STATUS_PRE){
       //println("予告線:preTime = " + preTime);
-      stroke(65,105,225,16);
+      stroke(65,105,225,60);
       strokeWeight(laserRange);
       line(startPoint.x,startPoint.y,endPoint.x,endPoint.y);
       //予告状態制御

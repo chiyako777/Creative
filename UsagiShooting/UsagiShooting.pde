@@ -1,4 +1,3 @@
-
 /** ★★★うさぎシューティング★★★ **/
 
 //モード
@@ -12,21 +11,22 @@ int sceneNo = Const.SCENE_NO_TITLE;
 Opening op;
 Player player;
 ArrayList<Chapter> chapterList;
-
+Music music;
 
 void setup(){
   
   size(600,750);
   
   op = new Opening();
+  music = new Music(this);
   
   /*自機生成*/
   player = new Player(width/2,height*4/5);
   
   /*チャプターリスト生成*/
   chapterList = new ArrayList<Chapter>();
-  //chapterList.add(new Chapter1());
-  //chapterList.add(new Chapter2());
+  chapterList.add(new Chapter1());
+  chapterList.add(new Chapter2());
   chapterList.add(new Chapter3());
   
   /*初回チャプターのみ、先に敵リストを生成する*/
@@ -41,21 +41,22 @@ void draw(){
   switch(sceneNo){
   
      case Const.SCENE_NO_TITLE:
-       /*タイトル画面*/
+       /*タイトル*/
        drawTitle();
        break;
     
      case Const.SCENE_NO_OPENING:
-       /*オープニング画面(カウントダウン)を描画*/
+       /*オープニング*/
        int count = op.drawOpening();
        if(count == 0){
-         sceneNo = Const.SCENE_NO_STAGE;
+         sceneNo = Const.SCENE_NO_STAGE1;
        }
        break;
 
-     case Const.SCENE_NO_STAGE:
-       /*ゲーム(道中)画面*/
-       execGame();
+     case Const.SCENE_NO_STAGE1:
+       /*ステージ1(道中)*/
+       music.playBGM();
+       execGame(music);
        
        break;
 
@@ -99,7 +100,7 @@ void drawTitle(){
 }
 
 //**ゲームを実行
-void execGame(){
+void execGame(Music music){
   
   /*上部情報画面描画*/
   fill(127);
@@ -118,7 +119,7 @@ void execGame(){
    
     //全てのチャプターが終了した場合はゲームクリア
     if(chapterList.size() == 0){
-      println("game clear");
+      println("全チャプター終了");
       sceneNo = Const.SCENE_NO_PRE_BOSS;
       return;
     }
@@ -130,7 +131,7 @@ void execGame(){
   }
   
   /*チャプターを実行*/
-  ch.exec(player);
+  ch.exec(player,music);
 
   /*自機を描画*/
   player.draw();
@@ -139,5 +140,5 @@ void execGame(){
   if(mode == Const.MODE_PRO && player.getZanki() <= -1){
     sceneNo = Const.SCENE_NO_GAMEOVER;
   }
-  
+ 
 }

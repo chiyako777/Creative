@@ -7,17 +7,18 @@ abstract class Enemy{
   protected PVector location;  //敵機の位置ベクトル
   protected PVector direction;  //敵機の移動方向ベクトル
   protected int activeTime = 0;  //アクティブ時間(フレーム数)
-  
+  protected int timeout;    //タイムアウト時間(フレーム数)
   protected BulletHell bulletHell;  //弾幕オブジェクト
   
   //**コンストラクタ
-  Enemy(float hp,PVector location,PVector direction){
+  Enemy(float hp,PVector location,PVector direction,int timeout){
     
     //個別セット
     this.status = Const.STATUS_ENEMY_WAIT;
     this.hp = hp;
     this.location = location;
     this.direction = direction;
+    this.timeout = timeout;
     
     //デフォルト値セット(サブクラスで実値セット)
     range = 0.0;
@@ -80,9 +81,11 @@ abstract class Enemy{
 
   //**敵機の画面外判定
   boolean isOutOfScreen(){
-    if(status == Const.STATUS_ENEMY_NOT_ACTIVE){
+    //アクティブ状態のときのみ判定を実行する
+    if(status != Const.STATUS_ENEMY_ACTIVE){
       return false;
     }
+    
     if(location.x < 0 || location.x > width){
       return true;
     }
@@ -90,6 +93,21 @@ abstract class Enemy{
       return true;
     }
     return false;
+    
+  }
+  
+  //**敵機のタイムアウト判定
+  boolean isTimeOut(){
+    //アクティブ状態のときのみ判定を実行する
+    if(status != Const.STATUS_ENEMY_ACTIVE){
+      return false;
+    }
+    
+    if(timeout != Const.TIMEOUT_ENEMY_INVALID && activeTime >= timeout){
+      return true;
+    }
+    return false;
+    
   }
   
   //**弾幕を初期化
@@ -126,8 +144,8 @@ abstract class Enemy{
 /*敵機タイプ①　丸型敵機:全方位弾射出*/
 class Enemy001 extends Enemy{
 
-  Enemy001(float hp,PVector location,PVector direction){
-    super(hp,location,direction);
+  Enemy001(float hp,PVector location,PVector direction,int timeout){
+    super(hp,location,direction,timeout);
     range = 10.0;
     //全方位弾幕生成(弾幕数、敵機位置)
     bulletHell = new AllRoundBullletHell(20,this.location);
@@ -159,8 +177,8 @@ class Enemy001 extends Enemy{
 class Enemy002 extends Enemy{
 
   //**コンストラクタ
-  Enemy002(float hp,PVector location,PVector direction,PVector playerLocation){
-    super(hp,location,direction);
+  Enemy002(float hp,PVector location,PVector direction,PVector playerLocation,int timeout){
+    super(hp,location,direction,timeout);
     range = 10.0;
     //自機狙い弾幕生成(敵機位置、自機位置)
     bulletHell = new TargetingBulletHell(this.location,playerLocation);
@@ -190,8 +208,8 @@ class Enemy002 extends Enemy{
 class Enemy003 extends Enemy{
 
   //**コンストラクタ
-  Enemy003(float hp,PVector location,PVector direction){
-    super(hp,location,direction);
+  Enemy003(float hp,PVector location,PVector direction,int timeout){
+    super(hp,location,direction,timeout);
     range = 10.0;
     //ランダム水滴弾幕生成(敵機位置)
     bulletHell = new WaterDropBulletHell(this.location);
@@ -223,8 +241,8 @@ class Enemy003 extends Enemy{
 class Enemy004 extends Enemy{
 
   //**コンストラクタ
-  Enemy004(float hp,PVector location,PVector direction,int laserNum ,int rotateFlg){
-    super(hp,location,direction);
+  Enemy004(float hp,PVector location,PVector direction,int laserNum ,int rotateFlg,int timeout){
+    super(hp,location,direction,timeout);
     range = 10.0;
     bulletHell = new AllRoundLaserBulletHell(this.location,3,laserNum,750,rotateFlg);
   }

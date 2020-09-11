@@ -1,5 +1,5 @@
 /* チャプタークラス(基底) */
-abstract class Chapter{ 
+abstract class Chapter{
   
   protected int chapterNo;  //チャプター番号
   protected ArrayList<Enemy> enemyList;  //敵リスト
@@ -16,7 +16,7 @@ abstract class Chapter{
   abstract void createEnemy(Player player);
   
   //**チャプターシナリオを実行
-  abstract void exec(Player player);
+  abstract void exec(Player player,Music music);
 
   
   //**チャプターが終了したか判定
@@ -31,7 +31,7 @@ abstract class Chapter{
   }
   
   //**シナリオ:前の敵機が非アクティブになったら次の敵機が出てくる
-  void execNormalSenario(Player player){
+  void execNormalSenario(Player player,Music music){
     int beforeStatus = 99;
     
     for(int i=0; i<enemyList.size(); i++){
@@ -64,11 +64,19 @@ abstract class Chapter{
       e.judgeHitToEnemy(player);
       if(e.isDefeat()){
         //敵機を非アクティブ状態に更新
+        println("敵機撃破");
+        music.playDefeteEnemy();
         e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
       }
 
       /*敵機の画面アウト判定*/
       if(e.isOutOfScreen()){
+        //敵機を非アクティブ状態に更新
+        e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
+      }
+      
+      /*敵機のタイムアウト判定*/
+      if(e.isTimeOut()){
         //敵機を非アクティブ状態に更新
         e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
       }
@@ -80,7 +88,7 @@ abstract class Chapter{
 
       /*自機への弾幕当たり判定*/
       if(player.getStatus() != Const.STATUS_PLAYER_MUTEKI && e.isHitBulletToPlayer(player)){
-        player.hit();
+        player.hit(music);
       }
       
       /*自機の敵機への衝突判定*/
@@ -111,16 +119,16 @@ class Chapter1 extends Chapter{
   //**敵を生成
   void createEnemy(Player player){
     //全方位弾敵*3
-    enemyList.add(new Enemy001(240.0,new PVector(width/2,0.0),new PVector(0.0,2.0)));
-    enemyList.add(new Enemy001(240.0,new PVector(width/4,0.0),new PVector(0.0,2.0)));
-    enemyList.add(new Enemy001(240.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0)));
+    enemyList.add(new Enemy001(240.0,new PVector(width/2,0.0),new PVector(0.0,2.0),960));
+    enemyList.add(new Enemy001(240.0,new PVector(width/4,0.0),new PVector(0.0,2.0),960));
+    enemyList.add(new Enemy001(240.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),960));
   }
   
   //**チャプターシナリオを実行
-  void exec(Player player){
+  void exec(Player player,Music music){
 
     /*★★シナリオ概要：全方位弾*3 撃破したら次の敵機が出てくる★★*/
-    execNormalSenario(player);
+    execNormalSenario(player,music);
     
   }
 
@@ -139,20 +147,20 @@ class Chapter2 extends Chapter{
   //**敵を生成
   void createEnemy(Player player){
     //自機狙い弾敵*3
-    enemyList.add(new Enemy002(120.0,new PVector(0.0,100.0),new PVector(3.0,0.0),player.getLocation()));
-    enemyList.add(new Enemy002(120.0,new PVector(width,100.0),new PVector(-3.0,0.0),player.getLocation()));
-    enemyList.add(new Enemy002(120.0,new PVector(0.0,100.0),new PVector(3.0,0.0),player.getLocation()));
+    enemyList.add(new Enemy002(120.0,new PVector(0.0,100.0),new PVector(3.0,0.0),player.getLocation(),Const.TIMEOUT_ENEMY_INVALID));
+    enemyList.add(new Enemy002(120.0,new PVector(width,100.0),new PVector(-3.0,0.0),player.getLocation(),Const.TIMEOUT_ENEMY_INVALID));
+    enemyList.add(new Enemy002(120.0,new PVector(0.0,100.0),new PVector(3.0,0.0),player.getLocation(),Const.TIMEOUT_ENEMY_INVALID));
     //ランダム弾*3
-    enemyList.add(new Enemy003(180.0,new PVector(width/2,0.0),new PVector(0.0,2.0)));
-    enemyList.add(new Enemy003(180.0,new PVector(width/4,0.0),new PVector(0.0,2.0)));
-    enemyList.add(new Enemy003(180.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0)));
+    enemyList.add(new Enemy003(180.0,new PVector(width/2,0.0),new PVector(0.0,2.0),720));
+    enemyList.add(new Enemy003(180.0,new PVector(width/4,0.0),new PVector(0.0,2.0),720));
+    enemyList.add(new Enemy003(180.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),720));
   }
 
   //**チャプターシナリオを実行
-  void exec(Player player){
+  void exec(Player player,Music music){
 
     /*★★シナリオ概要：自機狙い弾敵*3 画面アウトしたら次の敵が出てくる★★*/
-    execNormalSenario(player);
+    execNormalSenario(player,music);
   }
   
 }
@@ -177,27 +185,30 @@ class Chapter3 extends Chapter{
                         ,new PVector(width/8,100.0)
                         ,new PVector(0.0,0.0)
                         ,16
-                        ,Const.LASER_ROTATE_COUNTER_CLOCKWISE));
+                        ,Const.LASER_ROTATE_COUNTER_CLOCKWISE
+                        ,180));
     enemyList.add(new Enemy004(
                         120.0
                         ,new PVector(7*width/8,100.0)
                         ,new PVector(0.0,0.0)
                         ,16
-                        ,Const.LASER_ROTATE_CLOCKWISE));
+                        ,Const.LASER_ROTATE_CLOCKWISE
+                        ,180));
     //シナリオ2:放射レーザー+水滴
     enemyList.add(new Enemy004(
-                        120.0
+                        600.0
                         ,new PVector(width/2,100.0)
                         ,new PVector(0.0,0.0)
                         ,9
-                        ,Const.LASER_ROTATE_OFF));
-    enemyList.add(new Enemy003(180.0,new PVector(width/4,0.0),new PVector(0.0,2.0)));
-    enemyList.add(new Enemy003(180.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0)));
+                        ,Const.LASER_ROTATE_OFF
+                        ,600));
+    enemyList.add(new Enemy003(180.0,new PVector(width/4,0.0),new PVector(0.0,2.0),600));
+    enemyList.add(new Enemy003(180.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),600));
     
   }
   
   //**チャプターシナリオを実行+
-  void exec(Player player){
+  void exec(Player player,Music music){
     
     /*シナリオ遷移判定 ※もう少しコンパクトに書きたい..*/
     Enemy e0 = enemyList.get(0);
@@ -265,6 +276,7 @@ class Chapter3 extends Chapter{
       e.judgeHitToEnemy(player);
       if(e.isDefeat()){
         println("撃破:敵機を非アクティブ化");
+        music.playDefeteEnemy();
         //敵機を非アクティブ状態に更新
         e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
         //レーザーを削除
@@ -272,7 +284,7 @@ class Chapter3 extends Chapter{
       }
       
       /*敵機のタイムアウト判定*/
-      if(e.getActiveTime() > 1000){
+      if(e.isTimeOut()){
         println("タイムアウト:敵機を非アクティブ化");
         //敵機を非アクティブ状態に更新
         e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
@@ -289,7 +301,7 @@ class Chapter3 extends Chapter{
       /*自機への弾幕当たり判定*/
       //println("自機ステータス = " + player.getStatus());
       if(player.getStatus() != Const.STATUS_PLAYER_MUTEKI && e.isHitBulletToPlayer(player)){
-        player.hit();
+        player.hit(music);
       }
       
       /*自機の敵機への衝突判定*/

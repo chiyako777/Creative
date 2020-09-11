@@ -21,7 +21,6 @@ class Player{
     zanki = 5;
     status = Const.STATUS_PLAYER_NON;
     mutekiTime = 0;
-    
   }
   
   //**自機を描画
@@ -59,7 +58,8 @@ class Player{
   }
   
   /*被弾処理*/
-  void hit(){
+  void hit(Music music){
+    music.playHitPlayer();
     //残機マイナス
     zanki -= 1;
     //無敵時間開始
