@@ -144,11 +144,10 @@ abstract class Enemy{
 /*敵機タイプ①　丸型敵機:全方位弾射出*/
 class Enemy001 extends Enemy{
 
-  Enemy001(float hp,PVector location,PVector direction,int timeout){
+  Enemy001(float hp,PVector location,PVector direction,int timeout,String bulletType){
     super(hp,location,direction,timeout);
     range = 10.0;
-    //全方位弾幕生成(弾幕数、敵機位置)
-    bulletHell = new AllRoundBullletHell(20,this.location);
+    bulletHell = new AllRoundBullletHell(20,bulletType,this.location);
   }
   
   //**敵機の位置を更新

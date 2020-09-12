@@ -10,7 +10,7 @@ int sceneNo = Const.SCENE_NO_TITLE;
 //オブジェクト
 Opening op;
 Player player;
-ArrayList<Chapter> chapterList;
+ArrayList<Stage> stageList;
 Music music;
 
 void setup(){
@@ -23,16 +23,10 @@ void setup(){
   /*自機生成*/
   player = new Player(width/2,height*4/5);
   
-  /*チャプターリスト生成*/
-  chapterList = new ArrayList<Chapter>();
-  chapterList.add(new Chapter1());
-  chapterList.add(new Chapter2());
-  chapterList.add(new Chapter3());
+  /*ステージリスト生成*/
+  stageList = new ArrayList<Stage>();
+  stageList.add(new Stage1());
   
-  /*初回チャプターのみ、先に敵リストを生成する*/
-  Chapter ch = chapterList.get(0);
-  ch.createEnemy(player);
-
 }
 
 void draw(){
@@ -56,14 +50,20 @@ void draw(){
      case Const.SCENE_NO_STAGE1:
        /*ステージ1(道中)*/
        music.playBGM();
-       execGame(music);
+       Stage stage1 = stageList.get(0);
+       execGame(stage1,music);
        
        break;
 
      case Const.SCENE_NO_PRE_BOSS:
+       /*ボス前シーン*/
+       sceneNo += 1;  //skip
        break;
 
      case Const.SCENE_NO_BOSS:
+       /*ボス戦*/
+       music.playBGM();
+       
        break;
 
      case Const.SCENE_NO_CLEAR:
@@ -100,11 +100,19 @@ void drawTitle(){
 }
 
 //**ゲームを実行
-void execGame(Music music){
-  
+void execGame(Stage stage,Music music){
+
   /*上部情報画面描画*/
   fill(127);
   rect(0,0,width,Const.HEIGHT_INFO);
+  
+  /*未初期化の場合、ステージ初期化*/
+  if(!stage.getInitFlg()){
+    stage.init();
+  }
+  
+  /*チャプターリストを読み込み*/
+  ArrayList<Chapter> chapterList = stage.getChapterList();
   
   /*チャプターを実行準備*/
   Chapter ch = chapterList.get(0);
@@ -117,10 +125,10 @@ void execGame(Music music){
     //終了したチャプターはリストから削除
     chapterList.remove(0);
    
-    //全てのチャプターが終了した場合はゲームクリア
+    //全てのチャプターが終了した場合は次のシーンに進む
     if(chapterList.size() == 0){
       println("全チャプター終了");
-      sceneNo = Const.SCENE_NO_PRE_BOSS;
+      sceneNo += 1;
       return;
     }
     

@@ -3,7 +3,7 @@ abstract class Chapter{
   
   protected int chapterNo;  //チャプター番号
   protected ArrayList<Enemy> enemyList;  //敵リスト
-  
+    
   //**コンストラクタ
   Chapter(){
     
@@ -104,6 +104,66 @@ abstract class Chapter{
     player.updateStatusByTime();
   }
   
+  //**シナリオ:敵機が一気に出撃
+  void execAtOnceSenario(Player player,Music music){
+    for(Enemy e : enemyList){
+      //最初はアクティブ化
+      if(e.getStatus() == Const.STATUS_ENEMY_WAIT){
+        e.setStatus(Const.STATUS_ENEMY_ACTIVE);
+      }
+
+      //敵機が待機中または終了状態の時はスキップ
+      if(e.getStatus() == Const.STATUS_ENEMY_WAIT || e.getStatus() == Const.STATUS_ENEMY_DONE){
+        continue;
+      }
+      /*敵機・弾幕描画*/
+      e.updateLocation();
+      e.draw();
+      e.drawBulletHell();
+
+      /*敵機への攻撃・撃破判定*/
+      e.judgeHitToEnemy(player);
+      if(e.isDefeat()){
+        println("撃破:敵機を非アクティブ化");
+        music.playDefeteEnemy();
+        //敵機を非アクティブ状態に更新
+        e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
+        //弾幕を削除
+        e.deleteAllBullet();
+      }
+      
+      /*敵機のタイムアウト判定*/
+      if(e.isTimeOut()){
+        println("タイムアウト:敵機を非アクティブ化");
+        //敵機を非アクティブ状態に更新
+        e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
+        //弾幕を削除
+        e.deleteAllBullet();
+      }
+
+      /*敵機の処理終了判定*/
+      if(e.isDone()){
+        println("敵機処理終了");
+        e.setStatus(Const.STATUS_ENEMY_DONE);
+      }
+
+      /*自機への弾幕当たり判定*/
+      //println("自機ステータス = " + player.getStatus());
+      if(player.getStatus() != Const.STATUS_PLAYER_MUTEKI && e.isHitBulletToPlayer(player)){
+        player.hit(music);
+      }
+      
+      /*自機の敵機への衝突判定*/
+      if(e.getStatus() == Const.STATUS_ENEMY_ACTIVE && e.isHitEnemyToPlayer(player)){
+        player.hitEnemy(e);
+      }
+
+    }
+
+    /*自機の時間経過に伴う状態制御*/
+    player.updateStatusByTime();
+        
+  }
 }
 
 /*------------------------------------------------------------*/
@@ -119,9 +179,10 @@ class Chapter1 extends Chapter{
   //**敵を生成
   void createEnemy(Player player){
     //全方位弾敵*3
-    enemyList.add(new Enemy001(240.0,new PVector(width/2,0.0),new PVector(0.0,2.0),960));
-    enemyList.add(new Enemy001(240.0,new PVector(width/4,0.0),new PVector(0.0,2.0),960));
-    enemyList.add(new Enemy001(240.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),960));
+    enemyList.add(new Enemy001(240.0,new PVector(width/2,0.0),new PVector(0.0,2.0),960,Const.BULLET_TYPE_SMALL));
+    enemyList.add(new Enemy001(240.0,new PVector(width/4,0.0),new PVector(0.0,2.0),960,Const.BULLET_TYPE_SMALL));
+    enemyList.add(new Enemy001(240.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),960,Const.BULLET_TYPE_SMALL));
+
   }
   
   //**チャプターシナリオを実行
@@ -169,8 +230,6 @@ class Chapter2 extends Chapter{
 /*チャプター3クラス*/
 class Chapter3 extends Chapter{
 
-  int progress = 1;  //シナリオ進捗
-  
   //**コンストラクタ
   Chapter3(){
     super();
@@ -179,7 +238,7 @@ class Chapter3 extends Chapter{
 
   //**敵を生成
   void createEnemy(Player player){
-    //シナリオ1:放射レーザー*2
+    //放射レーザー*2
     enemyList.add(new Enemy004(
                         120.0
                         ,new PVector(width/8,100.0)
@@ -194,7 +253,28 @@ class Chapter3 extends Chapter{
                         ,16
                         ,Const.LASER_ROTATE_CLOCKWISE
                         ,180));
-    //シナリオ2:放射レーザー+水滴
+  }
+  
+  //**チャプターシナリオを実行+
+  void exec(Player player,Music music){
+    execAtOnceSenario(player,music);
+  } 
+  
+}
+
+/*------------------------------------------------------------*/
+/*チャプター4クラス*/
+class Chapter4 extends Chapter{
+  
+  //**コンストラクタ
+  Chapter4(){
+    super();
+    chapterNo = 4;
+  }
+
+  //**敵を生成
+  void createEnemy(Player player){
+    //放射レーザー+水滴
     enemyList.add(new Enemy004(
                         600.0
                         ,new PVector(width/2,100.0)
@@ -204,116 +284,11 @@ class Chapter3 extends Chapter{
                         ,600));
     enemyList.add(new Enemy003(180.0,new PVector(width/4,0.0),new PVector(0.0,2.0),600));
     enemyList.add(new Enemy003(180.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),600));
-    
   }
   
   //**チャプターシナリオを実行+
   void exec(Player player,Music music){
-    
-    /*シナリオ遷移判定 ※もう少しコンパクトに書きたい..*/
-    Enemy e0 = enemyList.get(0);
-    Enemy e1 = enemyList.get(1);
-    Enemy e2 = enemyList.get(2);
-    Enemy e3 = enemyList.get(3);
-    Enemy e4 = enemyList.get(4);
-    if(progress == 1){
-      if(e0.getStatus() == Const.STATUS_ENEMY_DONE && e1.getStatus() == Const.STATUS_ENEMY_DONE){
-        println("シナリオ進捗:2に更新");
-        progress = 2;
-      }
-    }
-    if(progress == 2){
-      if(e2.getStatus() == Const.STATUS_ENEMY_DONE 
-          && e3.getStatus() == Const.STATUS_ENEMY_DONE
-          && e4.getStatus() == Const.STATUS_ENEMY_DONE){
-        println("シナリオ進捗:3に更新");    
-        progress = 3;
-      }      
-    }
-    
-    
-    /*★★シナリオ1：放射レーザー★★*/
-    if(progress == 1){
-      
-      for(int i=0; i<2; i++){
-        Enemy e = enemyList.get(i);
-        //最初はアクティブ化
-        if(e.getStatus() == Const.STATUS_ENEMY_WAIT){
-          e.setStatus(Const.STATUS_ENEMY_ACTIVE);
-        }
-        e.updateLocation();
-        e.draw();
-        e.drawBulletHell();
-      }
-            
-    }
-    
-    /*★★シナリオ2：放射レーザー★★*/
-    if(progress == 2){
-      
-      for(int i=2; i<5; i++){
-        Enemy e = enemyList.get(i);
-        //最初はアクティブ化
-        if(e.getStatus() == Const.STATUS_ENEMY_WAIT){
-          e.setStatus(Const.STATUS_ENEMY_ACTIVE);
-        }
-        e.updateLocation();
-        e.draw();
-        e.drawBulletHell();
-      }
-      
-    }
-    
-    /*当たり判定、状態遷移など*/
-    for(Enemy e : enemyList){
-      
-      //敵機が待機中または終了状態の時はスキップ
-      if(e.getStatus() == Const.STATUS_ENEMY_WAIT || e.getStatus() == Const.STATUS_ENEMY_DONE){
-        continue;
-      }
-
-      /*敵機への攻撃・撃破判定*/
-      e.judgeHitToEnemy(player);
-      if(e.isDefeat()){
-        println("撃破:敵機を非アクティブ化");
-        music.playDefeteEnemy();
-        //敵機を非アクティブ状態に更新
-        e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
-        //レーザーを削除
-        e.deleteAllBullet();
-      }
-      
-      /*敵機のタイムアウト判定*/
-      if(e.isTimeOut()){
-        println("タイムアウト:敵機を非アクティブ化");
-        //敵機を非アクティブ状態に更新
-        e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
-        //レーザーを削除
-        e.deleteAllBullet();
-      }
-
-      /*敵機の処理終了判定*/
-      if(e.isDone()){
-        println("敵機処理終了");
-        e.setStatus(Const.STATUS_ENEMY_DONE);
-      }
-
-      /*自機への弾幕当たり判定*/
-      //println("自機ステータス = " + player.getStatus());
-      if(player.getStatus() != Const.STATUS_PLAYER_MUTEKI && e.isHitBulletToPlayer(player)){
-        player.hit(music);
-      }
-      
-      /*自機の敵機への衝突判定*/
-      if(e.getStatus() == Const.STATUS_ENEMY_ACTIVE && e.isHitEnemyToPlayer(player)){
-        player.hitEnemy(e);
-      }
-
-    }
-
-    /*自機の時間経過に伴う状態制御*/
-    player.updateStatusByTime();
-    
+    execAtOnceSenario(player,music);
   }  
   
 }

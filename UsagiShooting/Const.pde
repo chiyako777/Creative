@@ -14,28 +14,10 @@ class Const{
   final static int SCENE_NO_BOSS = 4;
   final static int SCENE_NO_CLEAR = 5;
   final static int SCENE_NO_GAMEOVER = 6;
-  
-  //チャプター数
-  final static int CHAPTER_NUM = 5;
-  
-  //自機ステータス
-  final static int STATUS_PLAYER_NON = 0;      //ノーショット状態
-  final static int STATUS_PLAYER_SHOOT = 1;    //ショット状態
-  final static int STATUS_PLAYER_BOM = 2;      //ボム状態(未実装)
-  final static int STATUS_PLAYER_MUTEKI = 3;   //被弾後無敵時間
-  
-  //敵機ステータス
-  final static int STATUS_ENEMY_WAIT = 0;          //待機状態
-  final static int STATUS_ENEMY_ACTIVE = 1;        //アクティブ状態(プレイヤーから見えている状態の敵)
-  final static int STATUS_ENEMY_NOT_ACTIVE = 2;    //非アクティブ状態(撃破済み、画面アウトなどで　プレイヤーから見えてない状態の敵)　
-                                                   //※敵機が消えても弾幕は生きていることがある
-                                                   //※元から非描画の敵を非アクティブ状態に含めるかは要検討
-  final static int STATUS_ENEMY_DONE = 3;          //終了状態
-  
-  
+
   //上部情報画面
   final static float HEIGHT_INFO = 50.0;
-  
+
   //キー操作フラグ
   final static int KEY_FLG_PRESS = 1;
   final static int KEY_FLG_RELEASE = 0;
@@ -48,13 +30,37 @@ class Const{
   final static int DIRECTION_DOWN = 2;
   final static int DIRECTION_LEFT = 3;
   final static int DIRECTION_RIGHT = 4;
+    
+  //チャプター数
+  final static int CHAPTER_NUM = 5; //不使用かも?
   
+  //自機ステータス
+  final static int STATUS_PLAYER_NON = 0;      //ノーショット状態
+  final static int STATUS_PLAYER_SHOOT = 1;    //ショット状態
+  final static int STATUS_PLAYER_BOM = 2;      //ボム状態(未実装)
+  final static int STATUS_PLAYER_MUTEKI = 3;   //被弾後無敵時間
+
   //自機当たり判定の半径
   final static float RANGE_HIT_PLAYER = 5.0;
   
   //自機被弾後の無敵時間(フレーム数)
   final static int MUTEKI_TIME_PLAYER = 60;
-
+  
+  //敵機ステータス
+  final static int STATUS_ENEMY_WAIT = 0;          //待機状態
+  final static int STATUS_ENEMY_ACTIVE = 1;        //アクティブ状態(プレイヤーから見えている状態の敵)
+  final static int STATUS_ENEMY_NOT_ACTIVE = 2;    //非アクティブ状態(撃破済み、画面アウトなどで　プレイヤーから見えてない状態の敵)　
+                                                   //※敵機が消えても弾幕は生きていることがある
+                                                   //※元から非描画の敵を非アクティブ状態に含めるかは要検討
+  final static int STATUS_ENEMY_DONE = 3;          //終了状態
+  
+  //敵機タイムアウト
+  final static int TIMEOUT_ENEMY_INVALID = 0;  //敵機タイムアウト時間(無効) 
+    
+  //弾種
+  final static String BULLET_TYPE_SMALL = "SmallBullet";    //小弾
+  final static String BULLET_TYPE_LARGE = "LargeBullet";    //大弾
+  
   //レーザー弾回転有無
   final static int LASER_ROTATE_OFF = 0;
   final static int LASER_ROTATE_CLOCKWISE = 1;          //時計回り
@@ -67,6 +73,4 @@ class Const{
   //レーザー予告時間
   final static int LASER_PRE_TIME_NORMAL = 60;  //通常(60フレーム)
  
-  //敵機タイムアウト
-  final static int TIMEOUT_ENEMY_INVALID = 0;  //敵機タイムアウト時間(無効) 
 }

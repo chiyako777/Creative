@@ -3,10 +3,29 @@ abstract class Stage{
 
   protected int stageNo;  //ステージ番号
   protected ArrayList<Chapter> chapterList;  //チャプターリスト
-  
+  protected boolean initFlg;  //初期化フラグ(false:未、true:済)
+    
   Stage(){
     stageNo = 0;
     chapterList = new ArrayList<Chapter>();
+    initFlg = false;
+  }
+  
+  //**初期処理
+  void init(){
+    //初回チャプターの敵リストを作成
+    Chapter ch = chapterList.get(0);
+    ch.createEnemy(player);
+    initFlg = true;
+  }
+  
+  /*getter,setter*/
+  ArrayList<Chapter> getChapterList(){
+    return chapterList;
+  }
+  
+  boolean getInitFlg(){
+    return initFlg;
   }
   
 }
@@ -21,8 +40,10 @@ class Stage1 extends Stage{
     chapterList.add(new Chapter1());
     chapterList.add(new Chapter2());
     chapterList.add(new Chapter3());
+    chapterList.add(new Chapter4());
   }
   
 }
 
 /*------------------------------------------------------------*/
+/*ステージ2*/

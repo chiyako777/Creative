@@ -28,10 +28,10 @@ abstract class Bullet{
   
   //**自機への当たり判定
   boolean isHitToPlayer(Player player){
-    float Lx = location.x - range;  //敵機左端
-    float Rx = location.x + range;  //敵機右端
-    float Uy = location.y - range;  //敵機上端
-    float Dy = location.y + range;  //敵機下端
+    float Lx = location.x - range;  //弾当たり左端
+    float Rx = location.x + range;  //弾当たり右端
+    float Uy = location.y - range;  //弾当たり上端
+    float Dy = location.y + range;  //弾当たり下端
     
     float playerX = player.getLocation().x;
     float playerY = player.getLocation().y;
@@ -78,6 +78,25 @@ class SmallBullet extends Bullet{
     fill(65,105,225);
     noStroke();
     ellipse(location.x,location.y,10,10);
+  }
+  
+}
+
+/*------------------------------------------------------------*/
+/* 大弾クラス */
+class LargeBullet extends Bullet{
+  
+  //** コンストラクタ
+  LargeBullet(PVector location,PVector velocity,PVector gravity){
+    super(location,velocity,gravity);
+    this.range = 10;
+  }
+  
+  //** 弾を描画
+  void draw(){
+    fill(65,105,225);
+    noStroke();
+    ellipse(location.x,location.y,30,30);
   }
   
 }
