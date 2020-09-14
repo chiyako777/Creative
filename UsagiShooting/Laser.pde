@@ -6,14 +6,16 @@ abstract class Laser{
   protected PVector laserVector; //レーザーベクトル(当たり判定用)
   protected float laserRange;    //レーザー幅
   protected int status;          //ステータス
-  protected int preTime;     //予告状態時間(フレーム数)
+  protected int preTime;         //予告状態時間(フレーム数)
+  protected int preTimeFinish;   //予告状態終了時間(フレーム数)
   
   //**コンストラクタ
-  Laser(PVector startPoint,PVector endPoint,float laserRange){
+  Laser(PVector startPoint,PVector endPoint,float laserRange,int preTimeFinish){
     
     this.startPoint = startPoint;
     this.endPoint = endPoint;
     this.laserRange = laserRange;
+    this.preTimeFinish = preTimeFinish;
     this.status = Const.LASER_STATUS_PRE;
     this.preTime = 0;
     //当たり判定用ベクトル生成
@@ -77,10 +79,10 @@ abstract class Laser{
   }
   
   //**レーザーの状態遷移
-  void updateStatus(){
+  void updateStatus(int preTimeFinish){
     
     //予告状態の終了判定
-    if(status == Const.LASER_STATUS_PRE && preTime >= Const.LASER_PRE_TIME_NORMAL){
+    if(status == Const.LASER_STATUS_PRE && preTime >= preTimeFinish){
       status = Const.LASER_STATUS_SHOOT;
     }
     
@@ -103,8 +105,8 @@ abstract class Laser{
 class NormalLaser extends Laser{
   
   //**コンストラクタ
-  NormalLaser(PVector startPoint,PVector endPoint,float laserRange){
-    super(startPoint,endPoint,laserRange);
+  NormalLaser(PVector startPoint,PVector endPoint,float laserRange,int preTimeFinish){
+    super(startPoint,endPoint,laserRange,preTimeFinish);
   }
   
   void draw(){
@@ -123,7 +125,7 @@ class NormalLaser extends Laser{
       line(startPoint.x,startPoint.y,endPoint.x,endPoint.y);
       //予告状態制御
       preTime += 1;
-      updateStatus();
+      updateStatus(preTimeFinish);
     }
   }
   

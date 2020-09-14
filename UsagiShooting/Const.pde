@@ -54,6 +54,9 @@ class Const{
                                                    //※元から非描画の敵を非アクティブ状態に含めるかは要検討
   final static int STATUS_ENEMY_DONE = 3;          //終了状態
   
+  //敵機体力
+  final static int HP_ENEMY_INVALID = -999;  //敵機体力(撃破不能な敵)
+  
   //敵機タイムアウト
   final static int TIMEOUT_ENEMY_INVALID = 0;  //敵機タイムアウト時間(無効) 
     
@@ -72,5 +75,6 @@ class Const{
  
   //レーザー予告時間
   final static int LASER_PRE_TIME_NORMAL = 60;  //通常(60フレーム)
+  final static int LASER_PRE_TIME_LONG = 120;  //長い(120フレーム)
  
 }

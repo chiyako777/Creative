@@ -26,7 +26,8 @@ void setup(){
   /*ステージリスト生成*/
   stageList = new ArrayList<Stage>();
   stageList.add(new Stage1());
-  
+  stageList.add(new Stage2());
+
 }
 
 void draw(){
@@ -63,7 +64,8 @@ void draw(){
      case Const.SCENE_NO_BOSS:
        /*ボス戦*/
        music.playBGM();
-       
+       Stage stage2 = stageList.get(1);
+       execGame(stage2,music);       
        break;
 
      case Const.SCENE_NO_CLEAR:

@@ -1,14 +1,13 @@
-
 /*------------------------------------------------------------*/
-/* 全方位弾幕クラス */
+/* 弾タイプ */
+/*------------------------------------------------------------*/
+/* 全方位弾幕 */
 class AllRoundBullletHell extends BulletHell{
   
   private int num;  //弾数
   private String bulletType;  //弾種
   PVector enemyLocation;  //敵機位置
   
-    
-  //**コンストラクタ
   AllRoundBullletHell(int num,String bulletType,PVector enemyLocation){
     super();
     this.num = num;
@@ -52,12 +51,11 @@ class AllRoundBullletHell extends BulletHell{
 }
 
 /*------------------------------------------------------------*/
-/* 自機狙い弾幕クラス */
+/* 自機狙い弾幕 */
 class TargetingBulletHell extends BulletHell{
     PVector enemyLocation;  //敵機位置
     PVector playerLocation;  //自機位置
 
-  //**コンストラクタ
   TargetingBulletHell(PVector enemyLocation,PVector playerLocation){
     super();
     this.enemyLocation = enemyLocation;
@@ -99,12 +97,11 @@ class TargetingBulletHell extends BulletHell{
 }
 
 /*------------------------------------------------------------*/
-/* ランダム落下水滴弾幕クラス */
-class WaterDropBulletHell extends BulletHell{
+/* ランダム発射弾幕 */
+class RandomBulletHell extends BulletHell{
   PVector enemyLocation;  //敵機位置
 
-  //**コンストラクタ
-  WaterDropBulletHell(PVector enemyLocation){
+  RandomBulletHell(PVector enemyLocation){
     super();
     this.enemyLocation = enemyLocation;
   }
@@ -115,7 +112,7 @@ class WaterDropBulletHell extends BulletHell{
     float angle;         //弾幕の角度
     float velocity = 2.5;  //弾幕の速度
     
-    //一定間隔で弾インスタンスを生成する(敵機がアクティブの場合)
+    //一定間隔で弾幕生成(敵機がアクティブの場合)
     if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%3 == 0){
       angle = random(2*PI);
       //小弾：始点位置は敵機の座標、向きはランダム、重力あり
@@ -135,6 +132,94 @@ class WaterDropBulletHell extends BulletHell{
 }
 
 /*------------------------------------------------------------*/
+/* 落下弾幕 */
+class FallBulletHell extends BulletHell{
+
+  FallBulletHell(){
+    super();
+  }
+  
+  //**弾幕を描画
+  void draw(int status){
+     if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%10 == 0){
+       bulletList.add(new LargeBullet(new PVector(random(width),0),new PVector(0,0),new PVector(0,2)));
+     }
+    //描画
+    drawBulletHell();
+    //画面外に出た弾のインスタンス削除
+    deleteBullet();   
+  }
+  
+}
+
+/*------------------------------------------------------------*/
+/* レーザー型弾幕 */
+class LaserLikeBulletHell extends BulletHell{
+  PVector enemyLocation;  //敵機位置
+  float angle;  //発射角度
+  float vector;  //速度
+  
+  LaserLikeBulletHell(PVector enemyLocation,float angle){
+    super(); 
+    this.enemyLocation = enemyLocation;
+    this.angle = angle;
+    this.vector = 4.0;
+  }
+  
+  //**弾幕を描画
+  void draw(int status){
+    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%4 == 0){
+      bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angle)*vector,sin(angle)*vector),null));
+    }
+    //描画
+    drawBulletHell();
+    //画面外に出た弾のインスタンス削除
+    deleteBullet();   
+  }
+  
+}
+
+/*------------------------------------------------------------*/
+/* ハート型弾幕 */
+class HeartBulletHell extends BulletHell{
+  PVector enemyLocation;
+  float x;
+  float y;
+  float xFormula;
+  float yFormula;
+  
+  HeartBulletHell(PVector enemyLocation){
+    super();
+    this.enemyLocation = enemyLocation;
+  }
+  
+  //**弾幕を描画
+  void draw(int status){
+    //弾幕生成
+    if(frameCount%120 == 0){
+      for (int i = 0; i < 360; i+=5) {
+        xFormula = (16 * sin(radians(i)) * sin(radians(i)) * sin(radians(i)));
+        yFormula = (13 * cos(radians(i)) - 5 * cos(radians(2 * i)) - 2 * cos(radians(3 * i)) - cos(radians(4 * i))) * (-1);
+        x = 8 * xFormula + enemyLocation.x;
+        y = 8 * yFormula + enemyLocation.y;
+        bulletList.add(new SmallBullet(new PVector(x,y),new PVector(xFormula*0.1,yFormula*0.1),null));
+      }
+    }
+    //描画
+    drawBulletHell();
+    //画面外に出た弾のインスタンス削除
+    deleteBullet(); 
+  } 
+}
+
+/*------------------------------------------------------------*/
+/* バウンド弾幕 */
+class BoundBulletHell extends BulletHell{
+}
+
+/*------------------------------------------------------------*/
+/* レーザータイプ */
+/*------------------------------------------------------------*/
 /* 放射レーザー弾幕クラス */
 class AllRoundLaserBulletHell extends BulletHell{
   PVector enemyLocation;  //敵機位置
@@ -144,8 +229,6 @@ class AllRoundLaserBulletHell extends BulletHell{
   
   float rotateCnt = 0.0;  //回転係数
   
-
-  //**コンストラクタ
   AllRoundLaserBulletHell(PVector enemyLocation,float laserRange,int num,float laserLen,int rotateFlg){
     super();
     this.enemyLocation = enemyLocation;
@@ -158,7 +241,8 @@ class AllRoundLaserBulletHell extends BulletHell{
       float angle = (2*PI/this.num) * i;
       laserList.add(new NormalLaser(new PVector(this.enemyLocation.x,this.enemyLocation.y)
                                     ,new PVector((cos(angle)*this.laserLen)+this.enemyLocation.x,(sin(angle)*this.laserLen)+this.enemyLocation.y)
-                                    ,laserRange));
+                                    ,laserRange
+                                    ,Const.LASER_PRE_TIME_NORMAL));
     }
     
   }
@@ -204,17 +288,42 @@ class AllRoundLaserBulletHell extends BulletHell{
 }
 
 /*------------------------------------------------------------*/
-/* リニアクリーチャー弾幕クラス */
-class LinearCleatureBulletHell extends BulletHell{
-
+/* 全体レーザー弾幕クラス */
+class WideLaserBulletHell extends BulletHell{
+  
+  int num;      //レーザー本数
+  float laserRange;  //レーザー幅
+  int myFrameCount;  //インスタンス生成時のフレームカウント
+  
   //**コンストラクタ
-  LinearCleatureBulletHell(){
+  WideLaserBulletHell(float laserRange,int num){
     super();
-    
+    this.num = num;
+    this.laserRange = laserRange;
+    this.myFrameCount = frameCount;
   }
   
   //**弾幕を描画
   void draw(int status){
-    
+    //レーザーを消す
+    if((frameCount-myFrameCount)%600 == 0){
+      laserList.clear();
+      return;
+    }
+    //レーザーを一定時間毎に作成
+    if((frameCount-myFrameCount)%300 == 0){
+      //myFrameCount = frameCount;
+      for(int i=0; i<num; i++){
+        float p = height/num * i + Const.HEIGHT_INFO;
+        if(i%2 != 0){
+          laserList.add(new NormalLaser(new PVector(0,p),new PVector(width,random(p-150,p+150)),laserRange,Const.LASER_PRE_TIME_LONG));
+        }else{
+          laserList.add(new NormalLaser(new PVector(0,random(p-150,p+150)),new PVector(width,p),laserRange,Const.LASER_PRE_TIME_LONG));
+        }
+      }
+    }
+    //描画
+    drawBulletHell();
   }
+  
 }

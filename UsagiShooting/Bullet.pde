@@ -22,7 +22,7 @@ abstract class Bullet{
   
   //** 弾の位置を更新
   void updateLocation(){
-    location.add(velocity); //<>//
+    location.add(velocity); //<>// //<>// //<>//
     location.add(gravity);
   }
   
@@ -99,4 +99,21 @@ class LargeBullet extends Bullet{
     ellipse(location.x,location.y,30,30);
   }
   
+}
+
+/*------------------------------------------------------------*/
+/* 三角弾クラス */
+/* メモ:描画はイラストにして、実際の当たり判定は円形*/
+class TriangleBullet extends Bullet{
+
+  //** コンストラクタ
+  TriangleBullet(PVector location,PVector velocity,PVector gravity){
+    super(location,velocity,gravity);
+    this.range = 10;
+  }
+  
+  //** 弾を描画
+  void draw(){
+    fill(65,105,225);
+  }
 }

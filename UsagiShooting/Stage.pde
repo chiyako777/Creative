@@ -37,13 +37,23 @@ class Stage1 extends Stage{
   Stage1(){
     super();
     stageNo = 1;
-    chapterList.add(new Chapter1());
-    chapterList.add(new Chapter2());
-    chapterList.add(new Chapter3());
-    chapterList.add(new Chapter4());
+    //chapterList.add(new Chapter1());
+    //chapterList.add(new Chapter2());
+    //chapterList.add(new Chapter3());
+    //chapterList.add(new Chapter4());
+    chapterList.add(new Chapter5());
   }
   
 }
 
 /*------------------------------------------------------------*/
 /*ステージ2*/
+class Stage2 extends Stage{
+  
+  Stage2(){
+    super();
+    stageNo = 2;
+    chapterList.add(new BossChapter());
+  }
+  
+}
