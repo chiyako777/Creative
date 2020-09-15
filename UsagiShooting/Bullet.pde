@@ -3,7 +3,8 @@ abstract class Bullet{
   protected PVector location;  //位置ベクトル
   protected PVector velocity;  //速度ベクトル
   protected PVector gravity;   //重力ベクトル
-  protected float range;    //弾の当たり判定範囲
+  protected float range;    //弾の当たり判定半径
+  protected int boundNum;    //バウンド回数
   
   //** コンストラクタ
   Bullet(PVector location,PVector velocity,PVector gravity){
@@ -15,6 +16,7 @@ abstract class Bullet{
       this.gravity = new PVector(0.0,0.0);  //重力不使用
     }
     this.range = 0.0;
+    this.boundNum = 0;
   }
   
   //** 弾を描画
@@ -22,7 +24,7 @@ abstract class Bullet{
   
   //** 弾の位置を更新
   void updateLocation(){
-    location.add(velocity); //<>// //<>// //<>//
+    location.add(velocity); //<>//
     location.add(gravity);
   }
   
@@ -60,6 +62,25 @@ abstract class Bullet{
     }
     return false;
   }
+
+  //**弾のバウンド回数カウントアップ
+  void countBoundNum(){
+    boundNum += 1;
+  }
+  
+  /*getter,setter*/
+  PVector getLocation(){
+    return location;
+  }
+  PVector getVelocity(){
+    return velocity;
+  }  
+  void setVelocity(PVector velocity){
+    this.velocity = velocity;
+  }
+  int getBoundNum(){
+    return boundNum;
+  }
   
 }
 
@@ -70,14 +91,14 @@ class SmallBullet extends Bullet{
   //** コンストラクタ
   SmallBullet(PVector location,PVector velocity,PVector gravity){
     super(location,velocity,gravity);
-    this.range = 2.5;
+    this.range = Const.SMALLBULLET_RANGE;
   }
   
   //** 弾を描画
   void draw(){
     fill(65,105,225);
     noStroke();
-    ellipse(location.x,location.y,10,10);
+    ellipse(location.x,location.y,Const.SMALLBULLET_DIAMETER,Const.SMALLBULLET_DIAMETER);
   }
   
 }

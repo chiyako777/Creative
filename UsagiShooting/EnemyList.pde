@@ -201,3 +201,59 @@ class Boss002 extends Enemy{
   }
 
 }
+
+/*------------------------------------------------------------*/
+/*ボス敵機　スペルカード:泳ぐ鳥　*/
+class Boss003 extends Enemy{
+  
+  boolean moveFlg;
+  float angle;
+  float margin = 30.0;
+  
+  Boss003(float hp,PVector location,PVector direction,int timeout,boolean bulletRemainFlg){
+    super(hp,location,direction,timeout,bulletRemainFlg);
+    range = 10.0;
+    bulletHellList.add(new BoundBulletHell());
+    moveFlg = false;
+  }
+  
+  //**敵機の位置を更新
+  void updateLocation(){
+    //移動制御
+    if(frameCount%120 == 0){
+      if(moveFlg){
+        direction.x = 0.0;
+        direction.y = 0.0;
+        moveFlg = false;
+      }else{
+        println("移動");
+        angle = random(2*PI);
+        direction.x = cos(angle)*2;
+        direction.y = sin(angle)*2;
+        moveFlg = true;
+      }
+    }
+    //画面端に行ったらバウンド(敵機グラもあるので余白を取る)
+    if(frameCount%120 != 0){
+      if(location.x <= 0 + margin || location.x >= width - margin){
+        direction.x *= -1;
+      }
+      if(location.y <= Const.HEIGHT_INFO + margin || location.y >= 2*height/3){  //あまり下へはいかないように
+        direction.y *= -1;
+      }
+    }
+    //位置更新
+    location.add(direction);
+  }
+  
+  //**敵機を描画
+  void draw(){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      fill(234,85,80);
+      noStroke();
+      ellipse(location.x,location.y,20,20);
+      activeTime += 1;
+    }
+  }
+  
+}

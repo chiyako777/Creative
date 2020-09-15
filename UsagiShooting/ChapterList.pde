@@ -136,7 +136,7 @@ class Chapter5 extends Chapter{
   //**敵を生成
   void createEnemy(Player player){
     for(int i=0; i<20; i++){
-      enemyList.add(new Enemy005(Const.HP_ENEMY_INVALID,new PVector(random(width),random(Const.HEIGHT_INFO,400)),new PVector(0,1),60,PI/2,true));
+      enemyList.add(new Enemy005(Const.HP_ENEMY_INVALID,new PVector(random(width),random(Const.HEIGHT_INFO,250)),new PVector(0,1),60,PI/2,true));
     }
   }
   
@@ -158,8 +158,9 @@ class BossChapter extends Chapter{
 
   //**敵を生成
   void createEnemy(Player player){
-    enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false));
-    enemyList.add(new Boss002(300,new PVector(width/2,250),new PVector(0,0),1800,false));
+    //enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false));
+    //enemyList.add(new Boss002(300,new PVector(width/2,250),new PVector(0,0),1800,false));
+    enemyList.add(new Boss003(600,new PVector(width/2,100),new PVector(0,0),3600,false));
   }
   
   //**チャプターシナリオを実行+

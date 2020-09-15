@@ -64,6 +64,10 @@ class Const{
   final static String BULLET_TYPE_SMALL = "SmallBullet";    //小弾
   final static String BULLET_TYPE_LARGE = "LargeBullet";    //大弾
   
+  //弾仕様
+  final static float SMALLBULLET_DIAMETER = 10.0;  //小弾直径
+  final static float SMALLBULLET_RANGE = 2.5;  //小弾当たり判定半径
+  
   //レーザー弾回転有無
   final static int LASER_ROTATE_OFF = 0;
   final static int LASER_ROTATE_CLOCKWISE = 1;          //時計回り

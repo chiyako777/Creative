@@ -154,7 +154,7 @@ class Player{
 
   //**移動方向ベクトルの更新
   private void updateVector(){
-    //println("updateVector: directList.size() = " + directList.size()); //<>// //<>// //<>//
+    //println("updateVector: directList.size() = " + directList.size()); //<>//
     
     //どの矢印キーも押されていなければ静止する
     if(directList.size() == 0){

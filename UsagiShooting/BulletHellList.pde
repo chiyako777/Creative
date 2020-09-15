@@ -214,7 +214,52 @@ class HeartBulletHell extends BulletHell{
 
 /*------------------------------------------------------------*/
 /* バウンド弾幕 */
+/*(現状、スペカ用にある程度シナリオ化された動きをする。より自由に、雑魚的用に使いたい場合は別クラスを用意するなど考える) */
 class BoundBulletHell extends BulletHell{
+  
+  BoundBulletHell(){
+    super();
+  }
+
+  //**弾幕を描画
+  void draw(int status){
+    //弾幕生成、バウンド処理
+    if(frameCount%120 == 0){
+      for(int i=0; i<5; i++){
+        //初期位置、進行方向はランダム
+        float angle = random(2*PI);
+        bulletList.add(new SmallBullet(new PVector(random(0,width),random(Const.HEIGHT_INFO,400)),new PVector(cos(angle)*2.5,sin(angle)*2.5),null));
+      }
+    }
+    bound();
+    
+    //描画
+    drawBulletHell();
+    //画面外に出た弾のインスタンス削除
+    deleteBullet();     
+  }
+  
+  //**バウンド処理
+  void bound(){
+    for(Bullet b : bulletList){
+      if(b.getBoundNum() >= 3){ continue; }
+      float locationX = b.getLocation().x;
+      float locationY = b.getLocation().y;
+      float velocityX = b.getVelocity().x;
+      float velocityY = b.getVelocity().y;
+      if(locationX <= (0 + Const.SMALLBULLET_DIAMETER/2) || locationX >= (width - Const.SMALLBULLET_DIAMETER/2)){
+        velocityX *= -1;
+        b.countBoundNum();
+      }
+      if(locationY <= (Const.HEIGHT_INFO + Const.SMALLBULLET_DIAMETER/2) || locationY >= (height - Const.SMALLBULLET_DIAMETER/2)){
+        velocityY *= -1;
+        b.countBoundNum();
+      }
+      b.setVelocity(new PVector(velocityX,velocityY));
+    }
+  }
+  
+  
 }
 
 /*------------------------------------------------------------*/
