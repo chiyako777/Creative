@@ -24,22 +24,27 @@ class Player{
   }
   
   //**自機を描画
-  void draw(){
+  void draw(Image img){
     
     /*自機位置更新*/
     updateVector();
     location.add(direction);
     
     /*自機描画*/
-    noStroke();
+    stroke(216,52,115);
+    strokeWeight(4);
     if(status != Const.STATUS_PLAYER_MUTEKI){
       //通常
-      fill(255);
+      fill(248,244,230);
     }else{
       //被弾後無敵状態
+      noStroke();
       fill(234,85,80);
     }
+    img.drawPlayerImage(location);
     ellipse(location.x,location.y,10,10);
+    
+    
     
     /*ショット描画*/
     if(status == Const.STATUS_PLAYER_SHOOT){
@@ -154,7 +159,7 @@ class Player{
 
   //**移動方向ベクトルの更新
   private void updateVector(){
-    //println("updateVector: directList.size() = " + directList.size()); //<>//
+    //println("updateVector: directList.size() = " + directList.size()); //<>// //<>//
     
     //どの矢印キーも押されていなければ静止する
     if(directList.size() == 0){

@@ -19,7 +19,7 @@ class Enemy001 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(){
+  void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -49,7 +49,7 @@ class Enemy002 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(){
+  void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -81,7 +81,7 @@ class Enemy003 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(){
+  void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -108,7 +108,7 @@ class Enemy004 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(){
+  void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -136,7 +136,7 @@ class Enemy005 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(){
+  void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -164,11 +164,12 @@ class Boss001 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(){
+  void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(234,85,80);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      //fill(234,85,80);
+      //noStroke();
+      //ellipse(location.x,location.y,20,20);
+      img.drawBossImage(location);
       activeTime += 1;
     }
   }
@@ -191,11 +192,12 @@ class Boss002 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(){
+  void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(234,85,80);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      //fill(234,85,80);
+      //noStroke();
+      //ellipse(location.x,location.y,20,20);
+      img.drawBossImage(location);
       activeTime += 1;
     }
   }
@@ -247,11 +249,12 @@ class Boss003 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(){
+  void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(234,85,80);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      //fill(234,85,80);
+      //noStroke();
+      //ellipse(location.x,location.y,20,20);
+      img.drawBossImage(location);
       activeTime += 1;
     }
   }

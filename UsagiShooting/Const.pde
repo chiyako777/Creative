@@ -1,7 +1,9 @@
 /* 定数定義 */
 
 class Const{
-  
+  //--------------------------------------------------------------------------------------
+  //System
+  //--------------------------------------------------------------------------------------
   //モード
   final static int MODE_DEV = 0;  //(ゲームオーバーにならない)
   final static int MODE_PRO = 1;
@@ -67,7 +69,7 @@ class Const{
   //弾仕様
   final static float SMALLBULLET_DIAMETER = 10.0;  //小弾直径
   final static float SMALLBULLET_RANGE = 2.5;  //小弾当たり判定半径
-  
+
   //レーザー弾回転有無
   final static int LASER_ROTATE_OFF = 0;
   final static int LASER_ROTATE_CLOCKWISE = 1;          //時計回り
@@ -80,5 +82,18 @@ class Const{
   //レーザー予告時間
   final static int LASER_PRE_TIME_NORMAL = 60;  //通常(60フレーム)
   final static int LASER_PRE_TIME_LONG = 120;  //長い(120フレーム)
+
+  //--------------------------------------------------------------------------------------
+  //graphic
+  //--------------------------------------------------------------------------------------
+  
+  //自機グラフィック
+  final static float PLAYER_GRAPHIC_WIDTH = 35.0;
+  final static float PLAYER_GRAPHIC_HEIGHT = 53.0;
+  
+  //ボスグラフィック
+  final static float BOSS_GRAPHIC_WIDTH = 50.0;
+  final static float BOSS_GRAPHIC_HEIGHT = 92.0;
+
  
 }

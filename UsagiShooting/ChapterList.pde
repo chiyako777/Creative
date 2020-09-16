@@ -16,10 +16,10 @@ class Chapter1 extends Chapter{
   }
   
   //**チャプターシナリオを実行
-  void exec(Player player,Music music){
+  void exec(Player player,Music music,Image img){
 
     /*★★シナリオ概要：全方位弾*3 撃破したら次の敵機が出てくる★★*/
-    execNormalSenario(player,music);
+    execNormalSenario(player,music,img);
     
   }
 
@@ -47,10 +47,10 @@ class Chapter2 extends Chapter{
   }
 
   //**チャプターシナリオを実行
-  void exec(Player player,Music music){
+  void exec(Player player,Music music,Image img){
 
     /*★★シナリオ概要：自機狙い弾敵*3+ランダム弾*3 画面アウトしたら次の敵が出てくる★★*/
-    execNormalSenario(player,music);
+    execNormalSenario(player,music,img);
   }
   
 }
@@ -86,8 +86,8 @@ class Chapter3 extends Chapter{
   }
   
   //**チャプターシナリオを実行+
-  void exec(Player player,Music music){
-    execAtOnceSenario(player,music);
+  void exec(Player player,Music music,Image img){
+    execAtOnceSenario(player,music,img);
   } 
   
 }
@@ -118,8 +118,8 @@ class Chapter4 extends Chapter{
   }
   
   //**チャプターシナリオを実行
-  void exec(Player player,Music music){
-    execAtOnceSenario(player,music);
+  void exec(Player player,Music music,Image img){
+    execAtOnceSenario(player,music,img);
   }  
   
 }
@@ -141,8 +141,8 @@ class Chapter5 extends Chapter{
   }
   
   //**チャプターシナリオを実行
-  void exec(Player player,Music music){
-    execConstantSenario(player,music,30);
+  void exec(Player player,Music music,Image img){
+    execConstantSenario(player,music,30,img);
   }
   
 }
@@ -158,14 +158,14 @@ class BossChapter extends Chapter{
 
   //**敵を生成
   void createEnemy(Player player){
-    //enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false));
-    //enemyList.add(new Boss002(300,new PVector(width/2,250),new PVector(0,0),1800,false));
+    enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false));
+    enemyList.add(new Boss002(300,new PVector(width/2,250),new PVector(0,0),1800,false));
     enemyList.add(new Boss003(600,new PVector(width/2,100),new PVector(0,0),3600,false));
   }
   
   //**チャプターシナリオを実行+
-  void exec(Player player,Music music){
-    execNormalSenario(player,music);
+  void exec(Player player,Music music,Image img){
+    execNormalSenario(player,music,img);
   }  
   
 }

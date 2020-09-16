@@ -16,7 +16,7 @@ abstract class Chapter{
   abstract void createEnemy(Player player);
   
   //**チャプターシナリオを実行
-  abstract void exec(Player player,Music music);
+  abstract void exec(Player player,Music music,Image img);
 
   
   //**チャプターが終了したか判定
@@ -31,10 +31,10 @@ abstract class Chapter{
   }
   
   //**基本シナリオ
-  void execBaseSenario(Enemy e,Player player,Music music){
+  void execBaseSenario(Enemy e,Player player,Music music,Image img){
     /*敵機、弾幕の描画*/
     e.updateLocation();
-    e.draw();
+    e.draw(img);
     e.drawBulletHell();
     
     /*敵機への攻撃・撃破判定*/
@@ -87,7 +87,7 @@ abstract class Chapter{
   }
   
   //**シナリオ:前の敵機が非アクティブになったら次の敵機が出てくる
-  void execNormalSenario(Player player,Music music){
+  void execNormalSenario(Player player,Music music,Image img){
     
     int beforeStatus = 99;
     for(int i=0; i<enemyList.size(); i++){
@@ -110,7 +110,7 @@ abstract class Chapter{
       }
       
       //実行
-      execBaseSenario(e,player,music);
+      execBaseSenario(e,player,music,img);
       beforeStatus = e.getStatus();
       
     }    
@@ -120,7 +120,7 @@ abstract class Chapter{
   }
   
   //**シナリオ:敵機が一気に出撃
-  void execAtOnceSenario(Player player,Music music){
+  void execAtOnceSenario(Player player,Music music,Image img){
     for(Enemy e : enemyList){
       //最初はアクティブ化
       if(e.getStatus() == Const.STATUS_ENEMY_WAIT){
@@ -132,7 +132,7 @@ abstract class Chapter{
       }
       
       //実行
-      execBaseSenario(e,player,music);
+      execBaseSenario(e,player,music,img);
     }
 
     /*自機の時間経過に伴う状態制御*/
@@ -140,7 +140,7 @@ abstract class Chapter{
   }
   
   //**シナリオ:一定間隔で敵機が出てくる
-  void execConstantSenario(Player player,Music music,int interval){
+  void execConstantSenario(Player player,Music music,int interval,Image img){
     for(int i=0; i<enemyList.size();i++){
       
       Enemy beforeE = null;
@@ -163,7 +163,7 @@ abstract class Chapter{
       }
       
       //実行
-      execBaseSenario(currentE,player,music);
+      execBaseSenario(currentE,player,music,img);
     }
 
     /*自機の時間経過に伴う状態制御*/

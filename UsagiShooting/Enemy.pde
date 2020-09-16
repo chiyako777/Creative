@@ -31,7 +31,7 @@ abstract class Enemy{
   abstract void updateLocation();
   
   //**敵機を描画
-  abstract void draw();
+  abstract void draw(Image img);
 
   //**敵機から射出する弾幕を描画
   void drawBulletHell(){

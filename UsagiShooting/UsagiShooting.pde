@@ -12,6 +12,7 @@ Opening op;
 Player player;
 ArrayList<Stage> stageList;
 Music music;
+Image img;
 
 void setup(){
   
@@ -19,6 +20,7 @@ void setup(){
   
   op = new Opening();
   music = new Music(this);
+  img = new Image();
   
   /*自機生成*/
   player = new Player(width/2,height*4/5);
@@ -139,12 +141,11 @@ void execGame(Stage stage,Music music){
     ch.createEnemy(player);
     
   }
+  /*自機を描画*/
+  player.draw(img);
   
   /*チャプターを実行*/
-  ch.exec(player,music);
-
-  /*自機を描画*/
-  player.draw();
+  ch.exec(player,music,img);
 
   /*ゲームオーバー判定*/
   if(mode == Const.MODE_PRO && player.getZanki() <= -1){

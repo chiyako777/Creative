@@ -24,7 +24,7 @@ abstract class Bullet{
   
   //** 弾の位置を更新
   void updateLocation(){
-    location.add(velocity); //<>//
+    location.add(velocity); //<>// //<>// //<>//
     location.add(gravity);
   }
   
