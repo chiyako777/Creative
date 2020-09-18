@@ -166,10 +166,7 @@ class Boss001 extends Enemy{
   //**敵機を描画
   void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      //fill(234,85,80);
-      //noStroke();
-      //ellipse(location.x,location.y,20,20);
-      img.drawBossImage(location);
+      drawBoss(img);
       activeTime += 1;
     }
   }
@@ -194,10 +191,7 @@ class Boss002 extends Enemy{
   //**敵機を描画
   void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      //fill(234,85,80);
-      //noStroke();
-      //ellipse(location.x,location.y,20,20);
-      img.drawBossImage(location);
+      drawBoss(img);
       activeTime += 1;
     }
   }
@@ -251,10 +245,7 @@ class Boss003 extends Enemy{
   //**敵機を描画
   void draw(Image img){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      //fill(234,85,80);
-      //noStroke();
-      //ellipse(location.x,location.y,20,20);
-      img.drawBossImage(location);
+      drawBoss(img);
       activeTime += 1;
     }
   }

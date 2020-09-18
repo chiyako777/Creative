@@ -69,7 +69,9 @@ class Const{
   //弾仕様
   final static float SMALLBULLET_DIAMETER = 10.0;  //小弾直径
   final static float SMALLBULLET_RANGE = 2.5;  //小弾当たり判定半径
-
+  final static float LARGEBULLET_DIAMETER = 30.0;  //大弾直径
+  final static float LARGEBULLET_RANGE = 10.0;  //大弾当たり判定半径
+  
   //レーザー弾回転有無
   final static int LASER_ROTATE_OFF = 0;
   final static int LASER_ROTATE_CLOCKWISE = 1;          //時計回り
@@ -84,7 +86,7 @@ class Const{
   final static int LASER_PRE_TIME_LONG = 120;  //長い(120フレーム)
 
   //--------------------------------------------------------------------------------------
-  //graphic
+  //graphic、演出
   //--------------------------------------------------------------------------------------
   
   //自機グラフィック
@@ -94,6 +96,7 @@ class Const{
   //ボスグラフィック
   final static float BOSS_GRAPHIC_WIDTH = 50.0;
   final static float BOSS_GRAPHIC_HEIGHT = 92.0;
+  final static float BOSS_HPGAUGE_DIAMETER = 90.0;
 
  
 }

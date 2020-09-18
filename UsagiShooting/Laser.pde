@@ -8,9 +8,10 @@ abstract class Laser{
   protected int status;          //ステータス
   protected int preTime;         //予告状態時間(フレーム数)
   protected int preTimeFinish;   //予告状態終了時間(フレーム数)
+  protected color col;           //レーザー色
   
   //**コンストラクタ
-  Laser(PVector startPoint,PVector endPoint,float laserRange,int preTimeFinish){
+  Laser(PVector startPoint,PVector endPoint,float laserRange,int preTimeFinish,color col){
     
     this.startPoint = startPoint;
     this.endPoint = endPoint;
@@ -18,6 +19,7 @@ abstract class Laser{
     this.preTimeFinish = preTimeFinish;
     this.status = Const.LASER_STATUS_PRE;
     this.preTime = 0;
+    this.col = col;
     //当たり判定用ベクトル生成
     this.laserVector = (new PVector(this.endPoint.x - this.startPoint.x,this.endPoint.y - this.startPoint.y));
     
@@ -105,23 +107,32 @@ abstract class Laser{
 class NormalLaser extends Laser{
   
   //**コンストラクタ
-  NormalLaser(PVector startPoint,PVector endPoint,float laserRange,int preTimeFinish){
-    super(startPoint,endPoint,laserRange,preTimeFinish);
+  NormalLaser(PVector startPoint,PVector endPoint,float laserRange,int preTimeFinish,color col){
+    super(startPoint,endPoint,laserRange,preTimeFinish,col);
   }
   
   void draw(){
     /*実ショット*/
     if(status == Const.LASER_STATUS_SHOOT){
       //println("実線");
-      stroke(65,105,225);
+      strokeWeight(laserRange+7);
+      stroke(col,20);
+      line(startPoint.x,startPoint.y,endPoint.x,endPoint.y);
+      strokeWeight(laserRange+5);
+      stroke(col,50);
+      line(startPoint.x,startPoint.y,endPoint.x,endPoint.y);
+      strokeWeight(laserRange+3);
+      stroke(col,60);
+      line(startPoint.x,startPoint.y,endPoint.x,endPoint.y);
       strokeWeight(laserRange);
+      stroke(col);
       line(startPoint.x,startPoint.y,endPoint.x,endPoint.y);
     }
     /*予告線*/
     if(status == Const.LASER_STATUS_PRE){
       //println("予告線:preTime = " + preTime);
-      stroke(65,105,225,60);
       strokeWeight(laserRange);
+      stroke(col,60);
       line(startPoint.x,startPoint.y,endPoint.x,endPoint.y);
       //予告状態制御
       preTime += 1;

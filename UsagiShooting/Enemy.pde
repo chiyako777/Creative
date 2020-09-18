@@ -2,6 +2,7 @@
 abstract class Enemy{
   
   protected float hp;  //体力
+  protected float maxHp;  //最大体力
   protected int status;  //ステータス
   protected float range;  //敵機当たり判定の半径
   protected PVector location;  //敵機の位置ベクトル
@@ -16,6 +17,7 @@ abstract class Enemy{
     //個別セット
     this.status = Const.STATUS_ENEMY_WAIT;
     this.hp = hp;
+    this.maxHp = hp;
     this.location = location;
     this.direction = direction;
     this.timeout = timeout;
@@ -32,6 +34,22 @@ abstract class Enemy{
   
   //**敵機を描画
   abstract void draw(Image img);
+  
+  //**ボスを描画
+  void drawBoss(Image img){
+     //ボスグラフィック
+    img.drawBossImage(location);
+    //体力ゲージ
+    noFill();
+    stroke(176,196,222);
+    strokeWeight(3);
+    pushMatrix();
+    translate(location.x,location.y);
+    rotate(3*PI/2);
+    float angle = (360/maxHp) * (maxHp-hp);
+    arc(0,0,Const.BOSS_HPGAUGE_DIAMETER,Const.BOSS_HPGAUGE_DIAMETER,radians(angle),radians(360));
+    popMatrix();
+  }
 
   //**敵機から射出する弾幕を描画
   void drawBulletHell(){
