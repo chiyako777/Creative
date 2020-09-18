@@ -9,7 +9,7 @@ class Music{
   Music(PApplet sketch){
     
     //遊び
-    int i = int(random(1,5));
+    int i = int(random(1,7));
     switch(i){
       case 1:
         bgm1 = new SoundFile(sketch,"ビーストメトロポリス.mp3");
@@ -24,11 +24,18 @@ class Music{
         bgm1 = new SoundFile(sketch,"ハートフェルトファンシー.mp3");
         break;
       case 5:
+        bgm1 = new SoundFile(sketch,"狂気の瞳　～ Invisible Full Moon.mp3");
+        break;
+      case 6:
+        bgm1 = new SoundFile(sketch,"魔法少女達の百年祭.mp3");
+        break;
+      case 7:
         //レア！！
         bgm1 = new SoundFile(sketch,"野良猫は宇宙を目指した_2.mp3");
         break;        
     }
     
+    //bgm1 = new SoundFile(sketch,"狂気の瞳　～ Invisible Full Moon.mp3");
     //bgm1 = new SoundFile(sketch,"野良猫は宇宙を目指した_2.mp3");
     hitPlayer = new SoundFile(sketch,"se_maoudamashii_magical19.mp3");
     defeteEnemy = new SoundFile(sketch,"se_maoudamashii_battle09.mp3");

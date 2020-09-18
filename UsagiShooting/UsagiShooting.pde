@@ -13,14 +13,18 @@ Player player;
 ArrayList<Stage> stageList;
 Music music;
 Image img;
+Scenario scenario;
 
 void setup(){
   
   size(600,750);
+  PFont font = createFont("Meiryo", 40);
+  textFont(font);
   
   op = new Opening();
   music = new Music(this);
   img = new Image();
+  scenario = new Scenario();
   
   /*自機生成*/
   player = new Player(width/2,height*4/5);
@@ -91,6 +95,10 @@ void keyReleased(){
   player.popDirect();
   /* 自機ステータス制御 */
   player.updateStatusByKey(key,Const.KEY_FLG_RELEASE);
+  /* 会話シーンを進める */
+  if(key==ENTER || key==RETURN){
+    scenario.moveToNext();
+  }
 }
 
 //**ゲームを実行
@@ -156,7 +164,6 @@ void drawTitle(){
 
 //**ボス前会話シーンを再生
 void drawStoryPreBoss(){
-  println("drawStoryPreBoss");
   
   /*上部情報画面描画*/
   fill(127);
@@ -168,13 +175,13 @@ void drawStoryPreBoss(){
   /*ボスを描画*/
   img.drawBossImage(new PVector(width/2,100));
   
-  
-  
+  /*会話を再生*/
+  scenario.drawStoryPreBoss(img);
   
   /* 終了 */
-  //if(終了){
-  //  sceneNo更新
-  //}
+  if(scenario.isFinishScenario()){
+    sceneNo = Const.SCENE_NO_BOSS;
+  }
   
 
 }

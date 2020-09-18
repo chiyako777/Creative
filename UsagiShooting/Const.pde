@@ -17,6 +17,10 @@ class Const{
   final static int SCENE_NO_CLEAR = 5;
   final static int SCENE_NO_GAMEOVER = 6;
 
+  //画面サイズ(staticクラス内など、直接width,heightプロパティを読めない場所があれば使用)
+  final static int WIDTH_SCREEN = 600;
+  final static int HEIGHT_SCREEN = 750;
+  
   //上部情報画面
   final static float HEIGHT_INFO = 50.0;
 
@@ -102,5 +106,10 @@ class Const{
   final static float PLAYERCUT_GRAPHIC_WIDTH = 100.0;
   final static float PLAYERCUT_GRAPHIC_HEIGHT = 150.0;
 
+  //ボスカットグラフィック
+  final static float BOSSCUT_GRAPHIC_WIDTH = 100.0;
+  final static float BOSSCUT_GRAPHIC_HEIGHT = 184.0;
  
+ //会話
+ final static int CAPTION_NUM_PRE_BOSS = 27;
 }

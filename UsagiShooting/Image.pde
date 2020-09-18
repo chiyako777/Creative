@@ -24,8 +24,14 @@ class Image{
     image(bossImg,x,y);
   }
 
-  //**ボスグラ描画
+  //**自機グラ(会話シーン)描画
   void drawPlayerCutImage(PVector location){
     image(playerCutImg,location.x,location.y);
   }
+  
+  //**ボスグラ(会話シーン)描画
+  void drawBossCutImage(PVector location){
+    image(bossImg,location.x,location.y,Const.BOSSCUT_GRAPHIC_WIDTH,Const.BOSSCUT_GRAPHIC_HEIGHT);
+  }
+ 
 }
