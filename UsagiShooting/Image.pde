@@ -2,10 +2,12 @@
 class Image{
   PImage playerImg;
   PImage bossImg;
+  PImage playerCutImg;
   
   Image(){
     playerImg = loadImage("graphic/player.png");
     bossImg = loadImage("graphic/boss.png");
+    playerCutImg = loadImage("graphic/playerCut.png");
   }
   
   //**自機グラ描画
@@ -21,5 +23,9 @@ class Image{
     float y = location.y - Const.BOSS_GRAPHIC_HEIGHT*2/3;
     image(bossImg,x,y);
   }
-  
+
+  //**ボスグラ描画
+  void drawPlayerCutImage(PVector location){
+    image(playerCutImg,location.x,location.y);
+  }
 }

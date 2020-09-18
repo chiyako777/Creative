@@ -98,5 +98,9 @@ class Const{
   final static float BOSS_GRAPHIC_HEIGHT = 92.0;
   final static float BOSS_HPGAUGE_DIAMETER = 90.0;
 
+  //自機カットグラフィック
+  final static float PLAYERCUT_GRAPHIC_WIDTH = 100.0;
+  final static float PLAYERCUT_GRAPHIC_HEIGHT = 150.0;
+
  
 }

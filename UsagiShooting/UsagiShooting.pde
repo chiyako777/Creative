@@ -60,7 +60,8 @@ void draw(){
 
      case Const.SCENE_NO_PRE_BOSS:
        /*ボス前シーン*/
-       sceneNo += 1;  //skip
+       drawStoryPreBoss();
+       //sceneNo += 1;  //skip
        break;
 
      case Const.SCENE_NO_BOSS:
@@ -90,17 +91,6 @@ void keyReleased(){
   player.popDirect();
   /* 自機ステータス制御 */
   player.updateStatusByKey(key,Const.KEY_FLG_RELEASE);
-}
-
-
-//**タイトル画面を描画
-void drawTitle(){
-  textSize(30);
-  text("pless any key...",50,370);
-  
-  if(keyPressed){
-    sceneNo = Const.SCENE_NO_OPENING;
-  }
 }
 
 //**ゲームを実行
@@ -152,4 +142,39 @@ void execGame(Stage stage,Music music){
     sceneNo = Const.SCENE_NO_GAMEOVER;
   }
  
+}
+
+//**タイトル画面を再生
+void drawTitle(){
+  textSize(30);
+  text("pless any key...",50,370);
+  
+  if(keyPressed){
+    sceneNo = Const.SCENE_NO_OPENING;
+  }
+}
+
+//**ボス前会話シーンを再生
+void drawStoryPreBoss(){
+  println("drawStoryPreBoss");
+  
+  /*上部情報画面描画*/
+  fill(127);
+  rect(0,0,width,Const.HEIGHT_INFO);
+  
+  /*自機を描画*/
+  player.draw(img);
+  
+  /*ボスを描画*/
+  img.drawBossImage(new PVector(width/2,100));
+  
+  
+  
+  
+  /* 終了 */
+  //if(終了){
+  //  sceneNo更新
+  //}
+  
+
 }

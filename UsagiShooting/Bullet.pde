@@ -1,3 +1,4 @@
+
 /* 弾クラス(基底) */
 abstract class Bullet{
   protected PVector location;  //位置ベクトル

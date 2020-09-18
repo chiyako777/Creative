@@ -222,7 +222,6 @@ class Boss003 extends Enemy{
         direction.y = 0.0;
         moveFlg = false;
       }else{
-        println("移動");
         angle = random(2*PI);
         direction.x = cos(angle)*2;
         direction.y = sin(angle)*2;
