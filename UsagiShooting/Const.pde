@@ -72,9 +72,11 @@ class Const{
   
   //弾仕様
   final static float SMALLBULLET_DIAMETER = 10.0;  //小弾直径
-  final static float SMALLBULLET_RANGE = 2.5;  //小弾当たり判定半径
+  final static float SMALLBULLET_RANGE = 3.0;  //小弾当たり判定半径
+  final static float SMALLBULLET_GRAZE = 15.0;  //小弾グレイズ判定半径
   final static float LARGEBULLET_DIAMETER = 30.0;  //大弾直径
   final static float LARGEBULLET_RANGE = 10.0;  //大弾当たり判定半径
+  final static float LARGEBULLET_GRAZE = 18.0;  //大弾グレイズ判定半径
   
   //レーザー弾回転有無
   final static int LASER_ROTATE_OFF = 0;
@@ -88,6 +90,15 @@ class Const{
   //レーザー予告時間
   final static int LASER_PRE_TIME_NORMAL = 60;  //通常(60フレーム)
   final static int LASER_PRE_TIME_LONG = 120;  //長い(120フレーム)
+
+  //スコア
+  final static int SCORE_BOSS_DEFEAT = 10141;  //ボス撃破
+  final static int SCORE_BOSS_SPELLCLEAR = 5039;  //ボススペルクリア(ノー撃破)
+  final static int SCORE_ENEMY_DEFEAT = 293;  //通常敵撃破
+  final static int SCORE_GRAZE = 3;  //グレイズ
+  final static int SCORE_NO_MISS = 2;  //一定時間ノー被弾
+  
+  final static int NO_MISS_TIME = 5;  //一定時間ノー被弾ボーナス付与タイム(フレーム数)
 
   //--------------------------------------------------------------------------------------
   //graphic、演出

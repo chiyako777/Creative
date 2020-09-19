@@ -10,9 +10,11 @@ abstract class Enemy{
   protected int activeTime = 0;  //アクティブ時間(フレーム数)
   protected int timeout;    //タイムアウト時間(フレーム数)
   protected boolean bulletRemainFlg;  //弾幕残しフラグ(敵機非アクティブ化後、弾幕を即消去するか残すか)
+  protected boolean bossFlg;  //ボスフラグ
+  protected int missCount = 0;    //自機被弾回数
   protected ArrayList<BulletHell> bulletHellList;  //弾幕オブジェクトリスト
   
-  Enemy(float hp,PVector location,PVector direction,int timeout,boolean bulletRemainFlg){
+  Enemy(float hp,PVector location,PVector direction,int timeout,boolean bulletRemainFlg,boolean bossFlg){
     
     //個別セット
     this.status = Const.STATUS_ENEMY_WAIT;
@@ -22,6 +24,7 @@ abstract class Enemy{
     this.direction = direction;
     this.timeout = timeout;
     this.bulletRemainFlg = bulletRemainFlg;
+    this.bossFlg = bossFlg;
     
     //デフォルト値セット(サブクラスで実値セット)
     range = 0.0;
@@ -95,6 +98,15 @@ abstract class Enemy{
     return isHit;
   }
   
+  //**自機へのグレイズ判定
+  int calcGrazeNum(Player player){
+    int grazeNum = 0;
+    for(BulletHell bulletHell : bulletHellList){
+      grazeNum += bulletHell.calcGrazeNum(player);
+    }
+    return grazeNum;
+  }
+  
   //**自機への敵機本体当たり判定
   boolean isHitEnemyToPlayer(Player player){
      //自機位置が敵機当たり範囲内
@@ -162,6 +174,12 @@ abstract class Enemy{
     return true;
   }
   
+  //**被弾回数カウントアップ
+  void addMissCount(){
+    missCount += 1;
+    println("addMissCount : " + missCount);
+  }
+  
   /*getter,setter*/
   int getStatus(){
     return status;
@@ -174,5 +192,12 @@ abstract class Enemy{
   }
   boolean getBulletRemainFlg(){
     return bulletRemainFlg;
+  }
+  boolean getBossFlg(){
+    return bossFlg;
+  }
+  int getMissCount(){
+    return missCount;
+    
   }
 }

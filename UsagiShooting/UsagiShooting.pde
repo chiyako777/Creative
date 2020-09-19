@@ -59,13 +59,11 @@ void draw(){
        music.playBGM();
        Stage stage1 = stageList.get(0);
        execGame(stage1,music);
-       
        break;
 
      case Const.SCENE_NO_PRE_BOSS:
        /*ボス前シーン*/
        drawStoryPreBoss();
-       //sceneNo += 1;  //skip
        break;
 
      case Const.SCENE_NO_BOSS:
@@ -103,10 +101,9 @@ void keyReleased(){
 
 //**ゲームを実行
 void execGame(Stage stage,Music music){
-
-  /*上部情報画面描画*/
-  fill(127);
-  rect(0,0,width,Const.HEIGHT_INFO);
+  
+  /*上部情報画面を描画*/
+  drawInfo();
   
   /*未初期化の場合、ステージ初期化*/
   if(!stage.getInitFlg()){
@@ -166,8 +163,7 @@ void drawTitle(){
 void drawStoryPreBoss(){
   
   /*上部情報画面描画*/
-  fill(127);
-  rect(0,0,width,Const.HEIGHT_INFO);
+  drawInfo();
   
   /*自機を描画*/
   player.draw(img);
@@ -181,7 +177,22 @@ void drawStoryPreBoss(){
   /* 終了 */
   if(scenario.isFinishScenario()){
     sceneNo = Const.SCENE_NO_BOSS;
-  }
-  
+  } 
 
+}
+
+//**上部情報画面を描画
+void drawInfo(){
+  noStroke();
+  fill(127);
+  rect(0,0,width,Const.HEIGHT_INFO);
+  //残機数
+  fill(255);
+  for(int i=0; i<player.getZanki(); i++){
+    rect(400 + (i*40),20,20,20);
+  }
+  //スコア
+  textSize(20);
+  text("score:"+str(Score.getScore()),30,35);
+  
 }

@@ -24,10 +24,10 @@ abstract class Bullet{
   
   //** 弾を描画
   abstract void draw();
-  
+
   //** 弾の位置を更新
   void updateLocation(){
-    location.add(velocity); //<>// //<>// //<>//
+    location.add(velocity); //<>// //<>// //<>// //<>//
     location.add(gravity);
   }
   
@@ -37,6 +37,32 @@ abstract class Bullet{
     float Rx = location.x + range;  //弾当たり右端
     float Uy = location.y - range;  //弾当たり上端
     float Dy = location.y + range;  //弾当たり下端
+    
+    float playerX = player.getLocation().x;
+    float playerY = player.getLocation().y;
+    float PLx = playerX - Const.RANGE_HIT_PLAYER;  //自機左端
+    float PRx = playerX + Const.RANGE_HIT_PLAYER;  //自機右端
+    float PUy = playerY - Const.RANGE_HIT_PLAYER;  //自機上端
+    float PDy = playerY + Const.RANGE_HIT_PLAYER;  //自機下端
+    
+    if(Lx < PRx && Rx > PLx){
+      if(Uy < PDy && Dy > PUy){
+        return true;
+      }
+    }
+    
+    return false;
+    
+  }
+  
+  //**自機へのグレイズ判定
+  abstract boolean isGrazeToPlayer(Player player);
+  
+  boolean isGrazeToPlayerCommon(Player player,float grazeRange){
+    float Lx = location.x - grazeRange;  //弾グレイズ左端
+    float Rx = location.x + grazeRange;  //弾グレイズ右端
+    float Uy = location.y - grazeRange;  //弾グレイズ上端
+    float Dy = location.y + grazeRange;  //弾グレイズ下端
     
     float playerX = player.getLocation().x;
     float playerY = player.getLocation().y;
@@ -69,8 +95,8 @@ abstract class Bullet{
   //**弾のバウンド回数カウントアップ
   void countBoundNum(){
     boundNum += 1;
-  }
-  
+  }  
+
   /*getter,setter*/
   PVector getLocation(){
     return location;
@@ -113,6 +139,11 @@ class SmallBullet extends Bullet{
     ellipse(location.x,location.y,Const.SMALLBULLET_DIAMETER/3,Const.SMALLBULLET_DIAMETER/3);
   }
   
+  //** グレイズ判定
+  boolean isGrazeToPlayer(Player player){
+    return isGrazeToPlayerCommon(player,Const.SMALLBULLET_GRAZE);
+  }
+  
 }
 
 /*------------------------------------------------------------*/
@@ -139,6 +170,11 @@ class LargeBullet extends Bullet{
     fill(col);
     ellipse(location.x,location.y,Const.LARGEBULLET_DIAMETER,Const.LARGEBULLET_DIAMETER);
   }
+
+  //** グレイズ判定
+  boolean isGrazeToPlayer(Player player){
+    return isGrazeToPlayerCommon(player,Const.LARGEBULLET_GRAZE);
+  }
   
 }
 
@@ -157,4 +193,11 @@ class TriangleBullet extends Bullet{
   void draw(){
     fill(col);
   }
+  
+  //** グレイズ判定
+  boolean isGrazeToPlayer(Player player){
+    //return isGrazeToPlayerCommon(player,Const.LARGEBULLET_GRAZE);
+    return false;
+  }
+
 }

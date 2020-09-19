@@ -50,6 +50,17 @@ abstract class BulletHell{
     return false;
   }
   
+  //**自機へのグレイズ回数
+  int calcGrazeNum(Player player){
+    int grazeNum = 0;
+    for(Bullet b : bulletList){
+      if(b.isGrazeToPlayer(player)){
+        grazeNum += 1;
+      }
+    }
+    return grazeNum;
+  }
+  
   //**画面外に出た弾を消去
   void deleteBullet(){
     for(int i=0; i<bulletList.size(); i++){

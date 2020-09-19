@@ -23,11 +23,17 @@ abstract class Chapter{
   boolean isChapterEnd(){
     for(Enemy e : enemyList){
       //処理中の敵がある場合、未終了
-      if(e.getStatus() != Const.STATUS_ENEMY_DONE){
-        return false;
-      }
+      if(e.getStatus() != Const.STATUS_ENEMY_DONE){ return false; }
     }
     return true;
+  }
+  
+  //**アクティブ状態の敵が存在するか判定
+  boolean isExistActiveEnemy(){
+    for(Enemy e : enemyList){
+      if(e.getStatus() == Const.STATUS_ENEMY_ACTIVE){ return true; }
+    }
+    return false;
   }
   
   //**基本シナリオ
@@ -40,33 +46,34 @@ abstract class Chapter{
     /*敵機への攻撃・撃破判定*/
     e.judgeHitToEnemy(player);
     if(e.isDefeat()){
-      //敵機を非アクティブ状態に更新
       println("敵機撃破");
       music.playDefeteEnemy();
+      Score.addDefeatBonus(e);
       e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
       if(!e.getBulletRemainFlg()){
-        //弾幕を削除
         e.deleteAllBullet();
+      }
+      if(e.bossFlg && e.getMissCount()==0){
+        Score.addSpellClearBonus();
       }
     }
 
     /*敵機の画面アウト判定*/
     if(e.isOutOfScreen()){
-      //敵機を非アクティブ状態に更新
       e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
       if(!e.getBulletRemainFlg()){
-        //弾幕を削除
         e.deleteAllBullet();
       }
     }
     
     /*敵機のタイムアウト判定*/
     if(e.isTimeOut()){
-      //敵機を非アクティブ状態に更新
       e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
       if(!e.getBulletRemainFlg()){
-        //弾幕を削除
         e.deleteAllBullet();
+      }
+      if(e.bossFlg && e.getMissCount()==0){
+        Score.addSpellClearBonus();
       }
     }
     
@@ -74,16 +81,27 @@ abstract class Chapter{
     if(e.isDone()){
       e.setStatus(Const.STATUS_ENEMY_DONE);
     }
+    
+    /*自機のグレイズ判定*/
+    if(player.getStatus() != Const.STATUS_PLAYER_MUTEKI){
+      for(int i=0; i<e.calcGrazeNum(player);i++){
+        Score.addGrazeBonus();
+        music.playGraze();
+      }
+    }
 
     /*自機への弾幕当たり判定*/
     if(player.getStatus() != Const.STATUS_PLAYER_MUTEKI && e.isHitBulletToPlayer(player)){
       player.hit(music);
+      e.addMissCount();
     }
     
     /*自機の敵機への衝突判定*/
     if(e.getStatus() == Const.STATUS_ENEMY_ACTIVE && e.isHitEnemyToPlayer(player)){
       player.hitEnemy(e);
+      e.addMissCount();
     }
+    
   }
   
   //**シナリオ:前の敵機が非アクティブになったら次の敵機が出てくる
@@ -117,6 +135,14 @@ abstract class Chapter{
    
     /*自機の時間経過に伴う状態制御*/
     player.updateStatusByTime();
+            
+    /*ノーミスボーナス*/
+    if(player.getNoMissTime()>= Const.NO_MISS_TIME && isExistActiveEnemy()){
+      Score.addNoMissBonus();
+      //println("一定時間ノーミスボーナス : " + Score.getScore() + " frameCount : " + frameCount);
+      player.initNoMissTime();
+    }
+
   }
   
   //**シナリオ:敵機が一気に出撃
@@ -136,7 +162,15 @@ abstract class Chapter{
     }
 
     /*自機の時間経過に伴う状態制御*/
-    player.updateStatusByTime(); 
+    player.updateStatusByTime();
+    
+    /*ノーミスボーナス*/
+    if(player.getNoMissTime()>= Const.NO_MISS_TIME && isExistActiveEnemy()){
+      Score.addNoMissBonus();
+      //println("一定時間ノーミスボーナス : " + Score.getScore() + " frameCount : " + frameCount);
+      player.initNoMissTime();
+    }
+
   }
   
   //**シナリオ:一定間隔で敵機が出てくる
@@ -168,6 +202,14 @@ abstract class Chapter{
 
     /*自機の時間経過に伴う状態制御*/
     player.updateStatusByTime(); 
-  }
+
+    /*ノーミスボーナス*/
+    if(player.getNoMissTime()>= Const.NO_MISS_TIME && isExistActiveEnemy()){
+      Score.addNoMissBonus();
+      //println("一定時間ノーミスボーナス : " + Score.getScore() + " frameCount : " + frameCount);
+      player.initNoMissTime();
+    }
+
+}
   
 }

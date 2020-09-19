@@ -9,6 +9,7 @@ class Player{
   private int zanki;    //残機
   private int status;    //ステータス
   private int mutekiTime;  //無敵時間
+  protected int noMissTime;  //ノーミス時間(フレーム数)
   
   //**コンストラクタ
   Player(float locationX,float locationY){
@@ -21,6 +22,7 @@ class Player{
     zanki = 5;
     status = Const.STATUS_PLAYER_NON;
     mutekiTime = 0;
+    noMissTime = 0;
   }
   
   //**自機を描画
@@ -36,6 +38,7 @@ class Player{
     if(status != Const.STATUS_PLAYER_MUTEKI){
       //通常
       fill(248,244,230);
+      noMissTime += 1;
     }else{
       //被弾後無敵状態
       noStroke();
@@ -43,9 +46,7 @@ class Player{
     }
     img.drawPlayerImage(location);
     ellipse(location.x,location.y,10,10);
-    
-    
-    
+       
     /*ショット描画*/
     if(status == Const.STATUS_PLAYER_SHOOT){
       stroke(255,64);
@@ -53,20 +54,15 @@ class Player{
       line(location.x,location.y,location.x,Const.HEIGHT_INFO);
     }
     
-    /*残機数描画*/
-    noStroke();
-    fill(255);
-    for(int i=0; i<zanki; i++){
-      rect(400 + (i*40),20,20,20);
-    }
-    
   }
   
   /*被弾処理*/
   void hit(Music music){
     music.playHitPlayer();
-    //残機マイナス
+    //残機-1
     zanki -= 1;
+    //ノーミス時間初期化
+    initNoMissTime();
     //無敵時間開始
     if(status != Const.STATUS_PLAYER_MUTEKI){
       status = Const.STATUS_PLAYER_MUTEKI;
@@ -156,10 +152,15 @@ class Player{
     }
     
   }
+  
+  //**ノーミス時間を初期化
+  void initNoMissTime(){
+    noMissTime = 0;
+  }
 
   //**移動方向ベクトルの更新
   private void updateVector(){
-    //println("updateVector: directList.size() = " + directList.size()); //<>// //<>//
+    //println("updateVector: directList.size() = " + directList.size()); //<>// //<>// //<>//
     
     //どの矢印キーも押されていなければ静止する
     if(directList.size() == 0){
@@ -215,7 +216,7 @@ class Player{
     return status;
   }
   
-  int getNoHitTime(){
+  int getMutekiTime(){
     return mutekiTime;
   }
   
@@ -225,6 +226,10 @@ class Player{
   
   PVector getLocation(){
     return location;
+  }
+  
+  int getNoMissTime(){
+    return noMissTime;
   }
   
 }

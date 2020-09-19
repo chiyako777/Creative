@@ -5,6 +5,7 @@ class Music{
   SoundFile bgm1;    
   SoundFile hitPlayer;  //被弾時SE
   SoundFile defeteEnemy;  //敵機撃破SE
+  SoundFile graze;  //グレイズSE
   
   Music(PApplet sketch){
     
@@ -39,6 +40,8 @@ class Music{
     //bgm1 = new SoundFile(sketch,"野良猫は宇宙を目指した_2.mp3");
     hitPlayer = new SoundFile(sketch,"se_maoudamashii_magical19.mp3");
     defeteEnemy = new SoundFile(sketch,"se_maoudamashii_battle09.mp3");
+    graze = new SoundFile(sketch,"firecracker1.mp3");
+    //graze = new SoundFile(sketch,"free_sound34.mp3");
   }
   
   void playBGM(){
@@ -48,13 +51,20 @@ class Music{
   }
   
   void playHitPlayer(){
-    hitPlayer.amp(0.2);
+    hitPlayer.amp(0.3);
     hitPlayer.play();
   }
 
   void playDefeteEnemy(){
-    defeteEnemy.amp(0.5);
+    defeteEnemy.amp(0.7);
     defeteEnemy.play();
+  }
+
+  void playGraze(){
+    if(!graze.isPlaying()){
+      graze.amp(2.5);
+      graze.play();
+    }
   }
   
 }
