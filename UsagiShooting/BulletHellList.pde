@@ -191,12 +191,13 @@ class LaserLikeBulletHell extends BulletHell{
   }
   
 }
+
 /*------------------------------------------------------------*/
 /* らせん放射型弾幕 */
 class HelixBulletHell extends BulletHell{
   PVector enemyLocation;
-  float angle = PI/2;
-  float angleAdd;
+  float angle = PI/2;  //開始角度
+  float angleAdd;      //角度増分
   float vector;
   
   HelixBulletHell(PVector enemyLocation,String bulletType,float angleAdd){
@@ -212,7 +213,7 @@ class HelixBulletHell extends BulletHell{
     if(status == Const.STATUS_ENEMY_ACTIVE){
       angle += angleAdd;
       if(angle>2*PI){ angle -= 2*PI; }
-      println("らせん angle = " + degrees(angle));
+      //println("らせん angle = " + degrees(angle));
       switch(bulletType){
         case Const.BULLET_TYPE_SMALL:
           bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angle)*vector,sin(angle)*vector),null,color(98,216,198)));
@@ -226,6 +227,58 @@ class HelixBulletHell extends BulletHell{
     deleteBullet();
   }
 
+}
+
+/*------------------------------------------------------------*/
+/* 複数らせん放射型弾幕 */
+class MultiHelixBulletHell extends BulletHell{
+  PVector enemyLocation;
+  int lineNum;    //らせん放射数
+  int interval;   //発射間隔
+  float angle;      //開始角度
+  float angleAdd;  //角度増分
+  boolean turnFlg;  //転換フラグ
+  int turnInterval;  //転換間隔
+  float vector;
+  
+  MultiHelixBulletHell(PVector enemyLocation,String bulletType,float angleAdd,int interval,int lineNum,boolean turnFlg,int turnInterval){
+    super();
+    this.bulletType = bulletType;
+    this.enemyLocation = enemyLocation;
+    this.angleAdd = angleAdd;
+    this.interval = interval;
+    this.lineNum = lineNum;
+    this.turnFlg = turnFlg;
+    this.turnInterval = turnInterval;
+    vector = 3;
+  }
+  
+  //**弾幕を描画
+  void draw(int status){
+    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%interval == 0){
+      angle += angleAdd;
+      if(angle>2*PI){ angle -= 2*PI; }
+      for(int i=0;i<lineNum;i++){
+        float angleTemp = angle + (2*PI)/lineNum * i;
+        if(angleTemp>2*PI){ angleTemp -= 2*PI; }
+        switch(bulletType){
+          case Const.BULLET_TYPE_SMALL:
+            bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angleTemp)*vector,sin(angleTemp)*vector),null,color(98,216,198)));
+            break;
+          case Const.BULLET_TYPE_LARGE:
+            bulletList.add(new LargeBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angleTemp)*vector,sin(angleTemp)*vector),null,color(98,216,198)));
+            break;
+        }
+      }
+      if(turnFlg && frameCount%turnInterval == 0){
+        angleAdd *= -1;
+      }
+      
+    }
+    drawBulletHell();
+    deleteBullet();
+  }
+  
 }
 
 /*------------------------------------------------------------*/
@@ -259,9 +312,7 @@ class HeartBulletHell extends BulletHell{
         bulletList.add(new SmallBullet(new PVector(x,y),new PVector(xFormula*0.1,yFormula*0.1),null,col));
       }
     }
-    //描画
     drawBulletHell();
-    //画面外に出た弾のインスタンス削除
     deleteBullet(); 
   }
 }
@@ -292,9 +343,7 @@ class BoundBulletHell extends BulletHell{
     }
     bound();
     
-    //描画
     drawBulletHell();
-    //画面外に出た弾のインスタンス削除
     deleteBullet();     
   }
   
@@ -401,7 +450,6 @@ class WideLaserBulletHell extends BulletHell{
   int myFrameCount;  //インスタンス生成時のフレームカウント
   color col = color(72,151,216);
   
-  //**コンストラクタ
   WideLaserBulletHell(float laserRange,int num){
     super();
     this.num = num;
@@ -428,7 +476,6 @@ class WideLaserBulletHell extends BulletHell{
         }
       }
     }
-    //描画
     drawBulletHell();
   }
   

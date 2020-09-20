@@ -178,6 +178,36 @@ class Enemy006 extends Enemy{
   
 }
 
+/*------------------------------------------------------------*/
+/*敵機タイプ⑦　複数らせん弾幕　*/
+class Enemy007 extends Enemy{
+
+  Enemy007(float hp,PVector location,PVector direction,int timeout,String bulletType,boolean bulletRemainFlg,boolean bossFlg,float angleAdd,int interval,int lineNum,boolean turnFlg,int turnInterval){
+    super(hp,location,direction,timeout,bulletRemainFlg,bossFlg);
+    range = 10.0;
+    bulletHellList.add(new MultiHelixBulletHell(this.location,bulletType,angleAdd,interval,lineNum,turnFlg,turnInterval));
+  }
+  
+  //**敵機の位置を更新
+  void updateLocation(){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      if(location.y < 300){
+        location.add(direction);    
+      }
+    }
+  }
+
+  //**敵機を描画
+  void draw(Image img){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      fill(255,247,153);
+      noStroke();
+      ellipse(location.x,location.y,20,20);
+      activeTime += 1;
+    }
+  }  
+
+}
 
 /*------------------------------------------------------------*/
 /*ボス敵機　スペルカード:リニアクリーチャーっぽいやつ　*/

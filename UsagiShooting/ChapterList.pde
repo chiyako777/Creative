@@ -151,7 +151,7 @@ class Chapter5 extends Chapter{
 }
 
 /*------------------------------------------------------------*/
-/*チャプター6*/
+/*チャプター6(新しく作った弾幕とりあえずここに)*/
 class Chapter6 extends Chapter{
 
   Chapter6(){
@@ -161,9 +161,11 @@ class Chapter6 extends Chapter{
   
   //**敵を生成
   void createEnemy(Player player){
-    enemyList.add(new Enemy006(120,new PVector(width/2,0.0),new PVector(0,2),480,Const.BULLET_TYPE_SMALL,true,false,radians(22)));
-    enemyList.add(new Enemy006(120,new PVector(width/4,0.0),new PVector(0,2),480,Const.BULLET_TYPE_SMALL,true,false,radians(22)));
-    enemyList.add(new Enemy006(120,new PVector(3*width/4,0.0),new PVector(0,2),480,Const.BULLET_TYPE_SMALL,true,false,radians(22)));
+    enemyList.add(new Enemy006(90,new PVector(width/2,0.0),new PVector(0,2),480,Const.BULLET_TYPE_SMALL,true,false,radians(22)));
+    enemyList.add(new Enemy006(90,new PVector(width/4,0.0),new PVector(0,2),480,Const.BULLET_TYPE_SMALL,true,false,radians(22)));
+    enemyList.add(new Enemy006(90,new PVector(3*width/4,0.0),new PVector(0,2),480,Const.BULLET_TYPE_SMALL,true,false,radians(22)));
+    //複数らせん(角度増分3°、発射間隔1、放射数5、転換あり、転換間隔20
+    //enemyList.add(new Enemy007(90,new PVector(width/2,100.0),new PVector(0,2),Const.TIMEOUT_ENEMY_INVALID,Const.BULLET_TYPE_SMALL,true,false,radians(3),1,4,true,20));
   }
   
   //**チャプターシナリオを実行

@@ -95,7 +95,7 @@ class Scenario{
         drawPlayerMessage("ぼくを　ころすの？");
         break;
       case 24:
-        drawBossMessage("物理的には。身体の方は責任をもって処分するよ。");
+        drawBossMessage("気絶させて意識を取り出すのさ。\n身体の方は責任をもって処分するよ。");
         break;
       case 25:
         drawPlayerMessage("それは　こまるよ　\nぼくは　なのはなの　さらだを　\nたべなきゃいけないもの");
