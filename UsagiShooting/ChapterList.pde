@@ -1,4 +1,4 @@
-/*------------------------------------------------------------*/
+2/*------------------------------------------------------------*/
 /*チャプター1*/
 class Chapter1 extends Chapter{
   
@@ -10,9 +10,9 @@ class Chapter1 extends Chapter{
   //**敵を生成
   void createEnemy(Player player){
     //全方位弾敵*3
-    enemyList.add(new Enemy001(120.0,new PVector(width/2,0.0),new PVector(0.0,2.0),480,Const.BULLET_TYPE_SMALL,true,false));
-    enemyList.add(new Enemy001(120.0,new PVector(width/4,0.0),new PVector(0.0,2.0),480,Const.BULLET_TYPE_SMALL,true,false));
-    enemyList.add(new Enemy001(120.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),480,Const.BULLET_TYPE_SMALL,true,false));
+    enemyList.add(new Enemy001(60.0,new PVector(width/2,0.0),new PVector(0.0,2.0),240,Const.BULLET_TYPE_SMALL,true,false));
+    enemyList.add(new Enemy001(60.0,new PVector(width/4,0.0),new PVector(0.0,2.0),240,Const.BULLET_TYPE_SMALL,true,false));
+    enemyList.add(new Enemy001(60.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),240,Const.BULLET_TYPE_SMALL,true,false));
   }
   
   //**チャプターシナリオを実行
@@ -41,9 +41,9 @@ class Chapter2 extends Chapter{
     enemyList.add(new Enemy002(Const.HP_ENEMY_INVALID,new PVector(width,100.0),new PVector(-3.0,0.0),player.getLocation(),Const.TIMEOUT_ENEMY_INVALID,true,false));
     enemyList.add(new Enemy002(Const.HP_ENEMY_INVALID,new PVector(0.0,100.0),new PVector(3.0,0.0),player.getLocation(),Const.TIMEOUT_ENEMY_INVALID,true,false));
     //ランダム弾*3
-    enemyList.add(new Enemy003(180.0,new PVector(width/2,0.0),new PVector(0.0,2.0),720,Const.BULLET_TYPE_LARGE,true,false,6));
-    enemyList.add(new Enemy003(180.0,new PVector(width/4,0.0),new PVector(0.0,2.0),720,Const.BULLET_TYPE_LARGE,true,false,6));
-    enemyList.add(new Enemy003(180.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),720,Const.BULLET_TYPE_LARGE,true,false,6));
+    enemyList.add(new Enemy003(60.0,new PVector(width/2,0.0),new PVector(0.0,2.0),240,Const.BULLET_TYPE_LARGE,true,false,6));
+    enemyList.add(new Enemy003(60.0,new PVector(width/4,0.0),new PVector(0.0,2.0),240,Const.BULLET_TYPE_LARGE,true,false,6));
+    enemyList.add(new Enemy003(60.0,new PVector(3*width/4,0.0),new PVector(0.0,2.0),240,Const.BULLET_TYPE_LARGE,true,false,6));
   }
 
   //**チャプターシナリオを実行
@@ -139,6 +139,7 @@ class Chapter5 extends Chapter{
   //**敵を生成
   void createEnemy(Player player){
     for(int i=0; i<20; i++){
+      //レーザー弾幕
       enemyList.add(new Enemy005(Const.HP_ENEMY_INVALID,new PVector(random(width),random(Const.HEIGHT_INFO,250)),new PVector(0,1),60,PI/2,true,false));
     }
   }
@@ -151,7 +152,7 @@ class Chapter5 extends Chapter{
 }
 
 /*------------------------------------------------------------*/
-/*チャプター6(新しく作った弾幕とりあえずここに)*/
+/*チャプター6*/
 class Chapter6 extends Chapter{
 
   Chapter6(){
@@ -176,6 +177,30 @@ class Chapter6 extends Chapter{
 }
 
 /*------------------------------------------------------------*/
+/*チャプター7*/
+class Chapter7 extends Chapter{
+
+  Chapter7(){
+    super();
+    chapterNo = 7;
+  }
+  
+  //**敵を生成
+  void createEnemy(Player player){
+    //複数らせん(角度増分2°、発射間隔6、放射数5、転換なし）
+    enemyList.add(new Enemy007(90,new PVector(width/2,100.0),new PVector(0,2),360,Const.BULLET_TYPE_SMALL,true,false,radians(2),12,5,false,1));
+    //全方位弾
+    enemyList.add(new Enemy001(60.0,new PVector(width/5,0.0),new PVector(0.0,2.0),240,Const.BULLET_TYPE_SMALL,true,false));
+    enemyList.add(new Enemy001(60.0,new PVector(4*width/5,0.0),new PVector(0.0,2.0),240,Const.BULLET_TYPE_SMALL,true,false));
+  }
+
+  //**チャプターシナリオを実行
+  void exec(Player player,Music music,Image img){
+    execAtOnceSenario(player,music,img);
+  }
+  
+}
+/*------------------------------------------------------------*/
 /*ボス戦*/
 class BossChapter extends Chapter{
 
@@ -186,7 +211,7 @@ class BossChapter extends Chapter{
 
   //**敵を生成
   void createEnemy(Player player){
-    //enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false,true));
+    enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false,true));
     enemyList.add(new Boss002(300,new PVector(width/2,250),new PVector(0,0),1800,false,true));
     enemyList.add(new Boss003(600,new PVector(width/2,100),new PVector(0,0),3600,false,true));
   }

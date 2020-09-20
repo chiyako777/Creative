@@ -182,9 +182,11 @@ class Enemy006 extends Enemy{
 /*敵機タイプ⑦　複数らせん弾幕　*/
 class Enemy007 extends Enemy{
 
-  Enemy007(float hp,PVector location,PVector direction,int timeout,String bulletType,boolean bulletRemainFlg,boolean bossFlg,float angleAdd,int interval,int lineNum,boolean turnFlg,int turnInterval){
+  Enemy007(float hp,PVector location,PVector direction,int timeout,String bulletType,boolean bulletRemainFlg,boolean bossFlg,
+            float angleAdd,int interval,int lineNum,boolean turnFlg,int turnInterval){
     super(hp,location,direction,timeout,bulletRemainFlg,bossFlg);
     range = 10.0;
+    turnInterval = turnFlg ? turnInterval : 1;
     bulletHellList.add(new MultiHelixBulletHell(this.location,bulletType,angleAdd,interval,lineNum,turnFlg,turnInterval));
   }
   

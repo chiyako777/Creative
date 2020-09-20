@@ -66,7 +66,7 @@ class Music{
 
   void playGraze(){
     if(!graze.isPlaying()){
-      graze.amp(2.5);
+      //graze.amp(2.5);
       graze.play();
     }
   }

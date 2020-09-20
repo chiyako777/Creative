@@ -318,8 +318,7 @@ class HeartBulletHell extends BulletHell{
 }
 
 /*------------------------------------------------------------*/
-/* バウンド弾幕 */
-/*(現状、スペカ用にある程度シナリオ化された動きをする。より自由に、雑魚的用に使いたい場合は別クラスを用意するなど考える) */
+/* バウンド弾幕(スペカ) */
 class BoundBulletHell extends BulletHell{
   float angle;
   int colNo;
@@ -332,13 +331,14 @@ class BoundBulletHell extends BulletHell{
   //**弾幕を描画
   void draw(int status){
     //弾幕生成、バウンド処理
-    if(frameCount%120 == 0){
-      for(int i=0; i<5; i++){
+    if(frameCount%150 == 0){
+      for(int i=0; i<3; i++){
         //初期位置、進行方向はランダム
         angle = random(2*PI);
         colNo = int(random(0,3));
         if(colNo == 3){ colNo = 2; }
         bulletList.add(new SmallBullet(new PVector(random(0,width),random(Const.HEIGHT_INFO,400)),new PVector(cos(angle)*2.5,sin(angle)*2.5),null,col[colNo]));
+        bulletList.add(new LargeBullet(new PVector(random(0,width),random(Const.HEIGHT_INFO,400)),new PVector(cos(angle)*2.5,sin(angle)*2.5),null,col[colNo]));
       }
     }
     bound();
@@ -350,7 +350,7 @@ class BoundBulletHell extends BulletHell{
   //**バウンド処理
   void bound(){
     for(Bullet b : bulletList){
-      if(b.getBoundNum() >= 3){ continue; }
+      if(b.getBoundNum() >= 2){ continue; }
       float locationX = b.getLocation().x;
       float locationY = b.getLocation().y;
       float velocityX = b.getVelocity().x;

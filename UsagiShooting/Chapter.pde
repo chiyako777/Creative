@@ -68,6 +68,7 @@ abstract class Chapter{
     
     /*敵機のタイムアウト判定*/
     if(e.isTimeOut()){
+      println("敵機タイムアウト");
       e.setStatus(Const.STATUS_ENEMY_NOT_ACTIVE);
       if(!e.getBulletRemainFlg()){
         e.deleteAllBullet();
