@@ -10,7 +10,7 @@ class Music{
   Music(PApplet sketch){
     
     //遊び
-    int i = int(random(1,7));
+    int i = int(random(1,8));
     switch(i){
       case 1:
         bgm1 = new SoundFile(sketch,"ビーストメトロポリス.mp3");
@@ -31,6 +31,9 @@ class Music{
         bgm1 = new SoundFile(sketch,"魔法少女達の百年祭.mp3");
         break;
       case 7:
+        bgm1 = new SoundFile(sketch,"Demystify Feast.mp3");
+        break;
+      case 8:
         //レア！！
         bgm1 = new SoundFile(sketch,"野良猫は宇宙を目指した_2.mp3");
         break;        
@@ -45,6 +48,7 @@ class Music{
   }
   
   void playBGM(){
+    //bgm1.amp(0.0);
     if(!bgm1.isPlaying()){
       bgm1.loop();
     }

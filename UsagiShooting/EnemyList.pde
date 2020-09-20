@@ -64,11 +64,11 @@ class Enemy002 extends Enemy{
 /*敵機タイプ③　丸型敵機:ランダム水滴弾射出　*/
 class Enemy003 extends Enemy{
 
-  Enemy003(float hp,PVector location,PVector direction,int timeout,boolean bulletRemainFlg,boolean bossFlg){
+  Enemy003(float hp,PVector location,PVector direction,int timeout,String bulletType,boolean bulletRemainFlg,boolean bossFlg,int interval){
     super(hp,location,direction,timeout,bulletRemainFlg,bossFlg);
     range = 10.0;
     //ランダム水滴弾幕生成(敵機位置)
-    bulletHellList.add(new RandomBulletHell(this.location));
+    bulletHellList.add(new RandomBulletHell(this.location,bulletType,interval));
   }
 
   //**敵機の位置を更新
@@ -146,6 +146,38 @@ class Enemy005 extends Enemy{
   }
  
 }
+
+/*------------------------------------------------------------*/
+/*敵機タイプ⑥　らせん弾幕　*/
+class Enemy006 extends Enemy{
+
+  Enemy006(float hp,PVector location,PVector direction,int timeout,String bulletType,boolean bulletRemainFlg,boolean bossFlg,float angleAdd){
+    super(hp,location,direction,timeout,bulletRemainFlg,bossFlg);
+    range = 10.0;
+    bulletHellList.add(new HelixBulletHell(this.location,bulletType,angleAdd));
+  }
+
+  //**敵機の位置を更新
+  void updateLocation(){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      if(location.y < 200){
+        location.add(direction);    
+      }
+    }
+  }
+  
+  //**敵機を描画
+  void draw(Image img){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      fill(255,247,153);
+      noStroke();
+      ellipse(location.x,location.y,20,20);
+      activeTime += 1;
+    }
+  }  
+  
+}
+
 
 /*------------------------------------------------------------*/
 /*ボス敵機　スペルカード:リニアクリーチャーっぽいやつ　*/

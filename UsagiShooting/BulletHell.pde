@@ -3,6 +3,7 @@ abstract class BulletHell{
   
   protected ArrayList<Bullet> bulletList;  //弾リスト
   protected ArrayList<Laser> laserList;  //レーザーリスト
+  protected String bulletType;  //弾種
   
   //**コンストラクタ
   BulletHell(){

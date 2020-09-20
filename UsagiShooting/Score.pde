@@ -32,6 +32,6 @@ static class Score{
   //**グレイズボーナス
   static void addGrazeBonus(){
     score += Const.SCORE_GRAZE;
-  }  
+  }
   
 }

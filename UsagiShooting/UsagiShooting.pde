@@ -189,7 +189,7 @@ void drawInfo(){
   //残機数
   fill(255);
   for(int i=0; i<player.getZanki(); i++){
-    rect(400 + (i*40),20,20,20);
+    rect(375 + (i*30),30,10,10);
   }
   //スコア
   textSize(20);

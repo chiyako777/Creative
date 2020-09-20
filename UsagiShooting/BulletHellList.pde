@@ -5,7 +5,6 @@
 class AllRoundBullletHell extends BulletHell{
   
   private int num;  //弾数
-  private String bulletType;  //弾種
   PVector enemyLocation;  //敵機位置
   
   AllRoundBullletHell(int num,String bulletType,PVector enemyLocation){
@@ -56,7 +55,7 @@ class AllRoundBullletHell extends BulletHell{
 class TargetingBulletHell extends BulletHell{
     PVector enemyLocation;  //敵機位置
     PVector playerLocation;  //自機位置
-    color col = color(98,216,198);
+    color col = color(199,165,204);
   TargetingBulletHell(PVector enemyLocation,PVector playerLocation){
     super();
     this.enemyLocation = enemyLocation;
@@ -101,11 +100,14 @@ class TargetingBulletHell extends BulletHell{
 /* ランダム発射弾幕 */
 class RandomBulletHell extends BulletHell{
   PVector enemyLocation;  //敵機位置
+  int interval;  //発射間隔
   color col = color(98,216,198);
 
-  RandomBulletHell(PVector enemyLocation){
+  RandomBulletHell(PVector enemyLocation,String bulletType,int interval){
     super();
     this.enemyLocation = enemyLocation;
+    this.bulletType = bulletType;
+    this.interval = interval;
   }
   
   //**弾幕を描画
@@ -115,12 +117,20 @@ class RandomBulletHell extends BulletHell{
     float velocity = 2.5;  //弾幕の速度
     
     //一定間隔で弾幕生成(敵機がアクティブの場合)
-    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%3 == 0){
+    if(status == Const.STATUS_ENEMY_ACTIVE && frameCount%interval == 0){
       angle = random(2*PI);
-      //小弾：始点位置は敵機の座標、向きはランダム、重力あり
-      bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y)
-                      ,new PVector(cos(angle)*velocity,sin(angle)*velocity)
-                      ,new PVector(0.0,1.0),col)); 
+      switch(bulletType){
+        case Const.BULLET_TYPE_SMALL :
+          bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y)
+                          ,new PVector(cos(angle)*velocity,sin(angle)*velocity)
+                          ,new PVector(0.0,1.0),col));
+          break;
+        case Const.BULLET_TYPE_LARGE :
+          bulletList.add(new LargeBullet(new PVector(enemyLocation.x,enemyLocation.y)
+                          ,new PVector(cos(angle)*velocity,sin(angle)*velocity)
+                          ,new PVector(0.0,1.0),col));
+          break;
+      }
     }
     
     //描画
@@ -181,6 +191,42 @@ class LaserLikeBulletHell extends BulletHell{
   }
   
 }
+/*------------------------------------------------------------*/
+/* らせん放射型弾幕 */
+class HelixBulletHell extends BulletHell{
+  PVector enemyLocation;
+  float angle = PI/2;
+  float angleAdd;
+  float vector;
+  
+  HelixBulletHell(PVector enemyLocation,String bulletType,float angleAdd){
+    super();
+    this.bulletType = bulletType;
+    this.enemyLocation = enemyLocation;
+    this.angleAdd = angleAdd;
+    vector = 4;
+  }
+  
+  //**弾幕を描画
+  void draw(int status){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      angle += angleAdd;
+      if(angle>2*PI){ angle -= 2*PI; }
+      println("らせん angle = " + degrees(angle));
+      switch(bulletType){
+        case Const.BULLET_TYPE_SMALL:
+          bulletList.add(new SmallBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angle)*vector,sin(angle)*vector),null,color(98,216,198)));
+          break;
+        case Const.BULLET_TYPE_LARGE:
+          bulletList.add(new LargeBullet(new PVector(enemyLocation.x,enemyLocation.y),new PVector(cos(angle)*vector,sin(angle)*vector),null,color(98,216,198)));
+          break;
+      }
+    }
+    drawBulletHell();
+    deleteBullet();
+  }
+
+}
 
 /*------------------------------------------------------------*/
 /* ハート型弾幕 */
@@ -191,21 +237,25 @@ class HeartBulletHell extends BulletHell{
   float xFormula;
   float yFormula;
   color col = color(241,141,158);
+  int myFrameCount;
   
   HeartBulletHell(PVector enemyLocation){
     super();
     this.enemyLocation = enemyLocation;
+    myFrameCount = frameCount-70;
   }
   
   //**弾幕を描画
   void draw(int status){
     //弾幕生成
-    if(frameCount%120 == 0){
+    int interval = int(random(90,131));
+    if(frameCount - myFrameCount >= interval){  
+      myFrameCount = frameCount;
       for (int i = 0; i < 360; i+=5) {
         xFormula = (16 * sin(radians(i)) * sin(radians(i)) * sin(radians(i)));
         yFormula = (13 * cos(radians(i)) - 5 * cos(radians(2 * i)) - 2 * cos(radians(3 * i)) - cos(radians(4 * i))) * (-1);
-        x = 8 * xFormula + enemyLocation.x;
-        y = 8 * yFormula + enemyLocation.y;
+        x = 5 * xFormula + enemyLocation.x;
+        y = 5 * yFormula + enemyLocation.y;
         bulletList.add(new SmallBullet(new PVector(x,y),new PVector(xFormula*0.1,yFormula*0.1),null,col));
       }
     }
@@ -213,7 +263,7 @@ class HeartBulletHell extends BulletHell{
     drawBulletHell();
     //画面外に出た弾のインスタンス削除
     deleteBullet(); 
-  } 
+  }
 }
 
 /*------------------------------------------------------------*/
