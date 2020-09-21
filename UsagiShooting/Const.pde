@@ -51,6 +51,10 @@ class Const{
   
   //自機被弾後の無敵時間(フレーム数)
   final static int MUTEKI_TIME_PLAYER = 60;
+
+  //残機
+  final static int ZANKI_MAX = 7;
+  final static int EXTEND_POINT_GRAZE = 100;
   
   //敵機ステータス
   final static int STATUS_ENEMY_WAIT = 0;          //待機状態

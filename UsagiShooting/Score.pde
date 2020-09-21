@@ -1,10 +1,20 @@
 /*スコア*/
 static class Score{
   static int score = 0;
+  static int graze = 0;
+  static int grazeExtend = 0;  //エクステンド判定用のグレイズ(一定数たまったら初期化する)
   
   //**スコア取得
   static int getScore(){
     return score;
+  }
+  //**グレイズ取得
+  static int getGraze(){
+    return graze;
+  }
+  //**エクステンド判定用グレイズ取得
+  static int getGrazeExtend(){
+    return grazeExtend;
   }
   
   //**撃破ボーナス
@@ -32,6 +42,13 @@ static class Score{
   //**グレイズボーナス
   static void addGrazeBonus(){
     score += Const.SCORE_GRAZE;
+    graze += 1;
+    grazeExtend += 1;
+  }
+  
+  //エクステンド判定用グレイズの初期化
+  static void initGrazeEntend(){
+    grazeExtend = 0;
   }
   
 }

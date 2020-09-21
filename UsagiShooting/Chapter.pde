@@ -143,6 +143,12 @@ abstract class Chapter{
       //println("一定時間ノーミスボーナス : " + Score.getScore() + " frameCount : " + frameCount);
       player.initNoMissTime();
     }
+    
+    /*エクステンド判定*/
+    if(Score.getGrazeExtend() >= Const.EXTEND_POINT_GRAZE){
+      player.extend(music);
+      Score.initGrazeEntend();
+    }
 
   }
   

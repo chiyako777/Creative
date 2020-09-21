@@ -157,6 +157,15 @@ class Player{
   void initNoMissTime(){
     noMissTime = 0;
   }
+  
+  //**エクステンド
+  void extend(Music music){
+    println("Extend!");
+    if(zanki <= Const.ZANKI_MAX){ 
+      zanki += 1;
+      music.playExtend();
+    }
+  }
 
   //**移動方向ベクトルの更新
   private void updateVector(){

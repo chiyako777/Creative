@@ -127,6 +127,7 @@ void execGame(Stage stage,Music music){
     //全てのチャプターが終了した場合は次のシーンに進む
     if(chapterList.size() == 0){
       println("全チャプター終了");
+      player.extend(music);
       sceneNo += 1;
       return;
     }
@@ -194,5 +195,8 @@ void drawInfo(){
   //スコア
   textSize(20);
   text("score:"+str(Score.getScore()),30,35);
+  //グレイズ
+  textSize(20);
+  text("graze:"+str(Score.getGraze()),200,35);
   
 }
