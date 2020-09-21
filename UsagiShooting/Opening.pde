@@ -15,6 +15,7 @@ class Opening{
     
     //カウントダウン変数を表示
     int size = 100;
+    fill(255);
     textSize(size);
     text(count,width/2-size/2,height/2);
     
@@ -28,6 +29,11 @@ class Opening{
     
     return count;
     
+  }
+  
+  //**カウントダウンをリセット
+  void resetCount(){
+    count = 3;
   }
   
 }

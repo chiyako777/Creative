@@ -178,6 +178,12 @@ abstract class Chapter{
       player.initNoMissTime();
     }
 
+    /*エクステンド判定*/
+    if(Score.getGrazeExtend() >= Const.EXTEND_POINT_GRAZE){
+      player.extend(music);
+      Score.initGrazeEntend();
+    }
+
   }
   
   //**シナリオ:一定間隔で敵機が出てくる
@@ -215,6 +221,12 @@ abstract class Chapter{
       Score.addNoMissBonus();
       //println("一定時間ノーミスボーナス : " + Score.getScore() + " frameCount : " + frameCount);
       player.initNoMissTime();
+    }
+
+    /*エクステンド判定*/
+    if(Score.getGrazeExtend() >= Const.EXTEND_POINT_GRAZE){
+      player.extend(music);
+      Score.initGrazeEntend();
     }
 
 }

@@ -160,12 +160,28 @@ class Player{
   
   //**エクステンド
   void extend(Music music){
-    println("Extend!");
-    if(zanki <= Const.ZANKI_MAX){ 
+    if(zanki < Const.ZANKI_MAX){
       zanki += 1;
       music.playExtend();
+      println("Extend! : " + zanki);
     }
   }
+
+  //**初期化
+  void init(){
+
+    location.x = width/2;
+    location.y = height*4/5;
+    direction.x = 0.0;
+    direction.y = 0.0;
+    directList.clear();
+    zanki = 5;
+    status = Const.STATUS_PLAYER_NON;
+    mutekiTime = 0;
+    noMissTime = 0;
+    
+  }
+  
 
   //**移動方向ベクトルの更新
   private void updateVector(){

@@ -1,8 +1,8 @@
 /** ★★★うさぎシューティング★★★ **/
 
 //モード
-int mode = Const.MODE_DEV;
-//int mode = Const.MODE_PRO;
+//int mode = Const.MODE_DEV;
+int mode = Const.MODE_PRO;
 
 //シーン番号
 int sceneNo = Const.SCENE_NO_TITLE;
@@ -77,6 +77,8 @@ void draw(){
        break;
        
      case Const.SCENE_NO_GAMEOVER:
+       /*ゲームオーバー*/
+       drawGameOver();
        break;
   }
 }
@@ -158,6 +160,29 @@ void drawTitle(){
   if(keyPressed){
     sceneNo = Const.SCENE_NO_OPENING;
   }
+}
+
+//**ゲームオーバー画面を再生
+void drawGameOver(){
+  fill(255);
+  textSize(30);
+  text("game over(pless any key to Retry!)",50,370);
+  
+  //リトライ
+  if(keyPressed){
+    retry();
+  }
+}
+
+//**リトライ処理
+void retry(){
+  op.resetCount();
+  stageList.clear();
+  stageList.add(new Stage1());
+  stageList.add(new Stage2());
+  player.init();
+  Score.init();
+  sceneNo = Const.SCENE_NO_OPENING;
 }
 
 //**ボス前会話シーンを再生

@@ -16,7 +16,7 @@ static class Score{
   static int getGrazeExtend(){
     return grazeExtend;
   }
-  
+
   //**撃破ボーナス
   static void addDefeatBonus(Enemy e){
     if(e.getBossFlg()){
@@ -51,4 +51,10 @@ static class Score{
     grazeExtend = 0;
   }
   
+  //**初期化
+  static void init(){
+    score = 0;
+    graze = 0;
+    grazeExtend = 0;
+  }
 }

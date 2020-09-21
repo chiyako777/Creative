@@ -54,7 +54,7 @@ class Const{
 
   //残機
   final static int ZANKI_MAX = 7;
-  final static int EXTEND_POINT_GRAZE = 100;
+  final static int EXTEND_POINT_GRAZE = 1000;
   
   //敵機ステータス
   final static int STATUS_ENEMY_WAIT = 0;          //待機状態
@@ -80,7 +80,7 @@ class Const{
   final static float SMALLBULLET_GRAZE = 15.0;  //小弾グレイズ判定半径
   final static float LARGEBULLET_DIAMETER = 30.0;  //大弾直径
   final static float LARGEBULLET_RANGE = 10.0;  //大弾当たり判定半径
-  final static float LARGEBULLET_GRAZE = 18.0;  //大弾グレイズ判定半径
+  final static float LARGEBULLET_GRAZE = 25.0;  //大弾グレイズ判定半径
   
   //レーザー弾回転有無
   final static int LASER_ROTATE_OFF = 0;
