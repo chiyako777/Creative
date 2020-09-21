@@ -101,6 +101,7 @@ class Const{
   final static int SCORE_ENEMY_DEFEAT = 293;  //通常敵撃破
   final static int SCORE_GRAZE = 3;  //グレイズ
   final static int SCORE_NO_MISS = 2;  //一定時間ノー被弾
+  final static int SCORE_CLEAR = 1000;  //クリアボーナス(残機1つあたり)
   
   final static int NO_MISS_TIME = 5;  //一定時間ノー被弾ボーナス付与タイム(フレーム数)
 

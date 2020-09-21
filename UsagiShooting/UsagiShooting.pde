@@ -74,6 +74,8 @@ void draw(){
        break;
 
      case Const.SCENE_NO_CLEAR:
+       /*クリア*/
+       drawResult();
        break;
        
      case Const.SCENE_NO_GAMEOVER:
@@ -129,8 +131,8 @@ void execGame(Stage stage,Music music){
     //全てのチャプターが終了した場合は次のシーンに進む
     if(chapterList.size() == 0){
       println("全チャプター終了");
-      player.extend(music);
       sceneNo += 1;
+      if(sceneNo != Const.SCENE_NO_CLEAR){ player.extend(music); }
       return;
     }
     
@@ -154,6 +156,7 @@ void execGame(Stage stage,Music music){
 
 //**タイトル画面を再生
 void drawTitle(){
+  fill(255);
   textSize(30);
   text("pless any key...",50,370);
   
@@ -183,6 +186,22 @@ void retry(){
   player.init();
   Score.init();
   sceneNo = Const.SCENE_NO_OPENING;
+}
+
+//**リザルト画面を再生
+void drawResult(){
+  fill(255);
+  textSize(30);
+  text("score:"+Score.getScore(),100,250);
+  text("clear bonus:"+Const.SCORE_CLEAR + "*" + player.getZanki()+" (life remain)",100,320);
+  textSize(45);
+  int totalScore = Score.getScore()+ Score.getClearBonus(player.getZanki());
+  text("total score:"+totalScore,100,420);
+  
+  //リトライ
+  if(keyPressed){
+    //retry();
+  }
 }
 
 //**ボス前会話シーンを再生
