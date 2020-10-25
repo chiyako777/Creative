@@ -58,7 +58,7 @@ void draw(){
        /*ステージ1(道中)*/
        music.playBGM();
        Stage stage1 = stageList.get(0);
-       execGame(stage1,music);
+       execGame(stage1);
        break;
 
      case Const.SCENE_NO_PRE_BOSS:
@@ -70,7 +70,7 @@ void draw(){
        /*ボス戦*/
        music.playBGM();
        Stage stage2 = stageList.get(1);
-       execGame(stage2,music);       
+       execGame(stage2);       
        break;
 
      case Const.SCENE_NO_CLEAR:
@@ -104,7 +104,7 @@ void keyReleased(){
 }
 
 //**ゲームを実行
-void execGame(Stage stage,Music music){
+void execGame(Stage stage){
   
   /*上部情報画面を描画*/
   drawInfo();
@@ -132,7 +132,7 @@ void execGame(Stage stage,Music music){
     if(chapterList.size() == 0){
       println("全チャプター終了");
       sceneNo += 1;
-      if(sceneNo != Const.SCENE_NO_CLEAR){ player.extend(music); }
+      if(sceneNo != Const.SCENE_NO_CLEAR){ player.extend(); }
       return;
     }
     
@@ -142,10 +142,10 @@ void execGame(Stage stage,Music music){
     
   }
   /*自機を描画*/
-  player.draw(img);
+  player.draw();
   
   /*チャプターを実行*/
-  ch.exec(player,music,img);
+  ch.exec(player);
 
   /*ゲームオーバー判定*/
   if(mode == Const.MODE_PRO && player.getZanki() <= -1){
@@ -211,13 +211,13 @@ void drawStoryPreBoss(){
   drawInfo();
   
   /*自機を描画*/
-  player.draw(img);
+  player.draw();
   
   /*ボスを描画*/
   img.drawBossImage(new PVector(width/2,100));
   
   /*会話を再生*/
-  scenario.drawStoryPreBoss(img);
+  scenario.drawStoryPreBoss();
   
   /* 終了 */
   if(scenario.isFinishScenario()){

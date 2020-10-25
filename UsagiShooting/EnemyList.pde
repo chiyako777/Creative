@@ -19,7 +19,7 @@ class Enemy001 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -49,7 +49,7 @@ class Enemy002 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -81,7 +81,7 @@ class Enemy003 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -108,7 +108,7 @@ class Enemy004 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -136,7 +136,7 @@ class Enemy005 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -167,7 +167,7 @@ class Enemy006 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -200,7 +200,7 @@ class Enemy007 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
       fill(255,247,153);
       noStroke();
@@ -228,9 +228,9 @@ class Boss001 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      drawBoss(img);
+      drawBoss();
       activeTime += 1;
     }
   }
@@ -253,9 +253,9 @@ class Boss002 extends Enemy{
   }
 
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      drawBoss(img);
+      drawBoss();
       activeTime += 1;
     }
   }
@@ -306,9 +306,9 @@ class Boss003 extends Enemy{
   }
   
   //**敵機を描画
-  void draw(Image img){
+  void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      drawBoss(img);
+      drawBoss();
       activeTime += 1;
     }
   }

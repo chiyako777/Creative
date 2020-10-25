@@ -115,8 +115,13 @@ class Const{
   
   //ボスグラフィック
   final static float BOSS_GRAPHIC_WIDTH = 50.0;
-  final static float BOSS_GRAPHIC_HEIGHT = 92.0;
+  final static float BOSS_GRAPHIC_HEIGHT = 82.0;
   final static float BOSS_HPGAUGE_DIAMETER = 90.0;
+
+  //UFOグラフィック
+  final static float UFO_GRAPHIC_WIDTH = 60.0;
+  final static float UFO_GRAPHIC_HEIGHT = 56.0;
+  final static float UFO_HPGAUGE_DIAMETER = 90.0;
 
   //自機カットグラフィック
   final static float PLAYERCUT_GRAPHIC_WIDTH = 100.0;
@@ -124,7 +129,7 @@ class Const{
 
   //ボスカットグラフィック
   final static float BOSSCUT_GRAPHIC_WIDTH = 100.0;
-  final static float BOSSCUT_GRAPHIC_HEIGHT = 184.0;
+  final static float BOSSCUT_GRAPHIC_HEIGHT = 163.0;
  
  //会話
  final static int CAPTION_NUM_PRE_BOSS = 27;

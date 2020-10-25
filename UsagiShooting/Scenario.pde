@@ -9,7 +9,7 @@ class Scenario{
     captionNum = Const.CAPTION_NUM_PRE_BOSS;
   }
   
-  void drawStoryPreBoss(Image img){
+  void drawStoryPreBoss(){
     img.drawPlayerCutImage(new PVector(50,height - Const.PLAYERCUT_GRAPHIC_HEIGHT-50));
     img.drawBossCutImage(new PVector(width - Const.BOSSCUT_GRAPHIC_WIDTH-50,height/3));
     if(captionProgress != Const.CAPTION_NUM_PRE_BOSS){
@@ -83,7 +83,7 @@ class Scenario{
         drawPlayerMessage("それは　まったく　ろまんちっくだね");
         break;
       case 20:
-        drawBossMessage("みんな流行りのドラマに影響されちゃったのさ。\nまったく 迷惑だよ。");
+        drawBossMessage("みんな流行りのドラマに影響されちゃったのさ。\nまったく いい迷惑だよ。");
         break;
       case 21:
         drawPlayerMessage("でも　ぼくは　つきでは　いきられないよ");
@@ -95,7 +95,7 @@ class Scenario{
         drawPlayerMessage("ぼくを　ころすの？");
         break;
       case 24:
-        drawBossMessage("気絶させて意識を取り出すのさ。\n身体の方は責任をもって処分するよ。");
+        drawBossMessage("まあ物理的には？\nらくに仕留めるからさ。");
         break;
       case 25:
         drawPlayerMessage("それは　こまるよ　\nぼくは　なのはなの　さらだを　\nたべなきゃいけないもの");

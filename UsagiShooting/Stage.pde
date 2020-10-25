@@ -38,12 +38,12 @@ class Stage1 extends Stage{
     super();
     stageNo = 1;
     //chapterList.add(new BossChapter());
-    //chapterList.add(new Chapter1());
-    //chapterList.add(new Chapter2());
-    //chapterList.add(new Chapter3());
-    //chapterList.add(new Chapter4());
-    //chapterList.add(new Chapter5());
-    //chapterList.add(new Chapter6());
+    chapterList.add(new Chapter1());
+    chapterList.add(new Chapter2());
+    chapterList.add(new Chapter3());
+    chapterList.add(new Chapter4());
+    chapterList.add(new Chapter5());
+    chapterList.add(new Chapter6());
     chapterList.add(new Chapter7());
   }
   

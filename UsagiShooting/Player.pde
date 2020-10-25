@@ -26,7 +26,7 @@ class Player{
   }
   
   //**自機を描画
-  void draw(Image img){
+  void draw(){
     
     /*自機位置更新*/
     updateVector();
@@ -57,7 +57,7 @@ class Player{
   }
   
   /*被弾処理*/
-  void hit(Music music){
+  void hit(){
     music.playHitPlayer();
     //残機-1
     zanki -= 1;
@@ -159,7 +159,7 @@ class Player{
   }
   
   //**エクステンド
-  void extend(Music music){
+  void extend(){
     if(zanki < Const.ZANKI_MAX){
       zanki += 1;
       music.playExtend();

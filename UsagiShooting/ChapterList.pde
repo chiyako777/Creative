@@ -16,10 +16,10 @@ class Chapter1 extends Chapter{
   }
   
   //**チャプターシナリオを実行
-  void exec(Player player,Music music,Image img){
+  void exec(Player player){
 
     /*★★シナリオ概要：全方位弾*3 撃破したら次の敵機が出てくる★★*/
-    execNormalSenario(player,music,img);
+    execNormalSenario(player);
     
   }
 
@@ -47,10 +47,10 @@ class Chapter2 extends Chapter{
   }
 
   //**チャプターシナリオを実行
-  void exec(Player player,Music music,Image img){
+  void exec(Player player){
 
     /*★★シナリオ概要：自機狙い弾敵*3+ランダム弾*3 画面アウトしたら次の敵が出てくる★★*/
-    execNormalSenario(player,music,img);
+    execNormalSenario(player);
   }
   
 }
@@ -88,8 +88,8 @@ class Chapter3 extends Chapter{
   }
   
   //**チャプターシナリオを実行+
-  void exec(Player player,Music music,Image img){
-    execAtOnceSenario(player,music,img);
+  void exec(Player player){
+    execAtOnceSenario(player);
   } 
   
 }
@@ -121,8 +121,8 @@ class Chapter4 extends Chapter{
   }
   
   //**チャプターシナリオを実行
-  void exec(Player player,Music music,Image img){
-    execAtOnceSenario(player,music,img);
+  void exec(Player player){
+    execAtOnceSenario(player);
   }  
   
 }
@@ -145,8 +145,8 @@ class Chapter5 extends Chapter{
   }
   
   //**チャプターシナリオを実行
-  void exec(Player player,Music music,Image img){
-    execConstantSenario(player,music,30,img);
+  void exec(Player player){
+    execConstantSenario(player,30);
   }
   
 }
@@ -170,8 +170,8 @@ class Chapter6 extends Chapter{
   }
   
   //**チャプターシナリオを実行
-  void exec(Player player,Music music,Image img){
-    execNormalSenario(player,music,img);
+  void exec(Player player){
+    execNormalSenario(player);
   }
   
 }
@@ -195,8 +195,8 @@ class Chapter7 extends Chapter{
   }
 
   //**チャプターシナリオを実行
-  void exec(Player player,Music music,Image img){
-    execAtOnceSenario(player,music,img);
+  void exec(Player player){
+    execAtOnceSenario(player);
   }
   
 }
@@ -211,14 +211,14 @@ class BossChapter extends Chapter{
 
   //**敵を生成
   void createEnemy(Player player){
-    //enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false,true));
+    enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false,true));
     enemyList.add(new Boss002(300,new PVector(width/2,250),new PVector(0,0),1800,false,true));
-    //enemyList.add(new Boss003(600,new PVector(width/2,100),new PVector(0,0),3600,false,true));
+    enemyList.add(new Boss003(600,new PVector(width/2,100),new PVector(0,0),3600,false,true));
   }
   
   //**チャプターシナリオを実行+
-  void exec(Player player,Music music,Image img){
-    execNormalSenario(player,music,img);
+  void exec(Player player){
+    execNormalSenario(player);
   }  
   
 }

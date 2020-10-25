@@ -36,10 +36,10 @@ abstract class Enemy{
   abstract void updateLocation();
   
   //**敵機を描画
-  abstract void draw(Image img);
+  abstract void draw();
   
   //**ボスを描画
-  void drawBoss(Image img){
+  void drawBoss(){
      //ボスグラフィック
     img.drawBossImage(location);
     //体力ゲージ
