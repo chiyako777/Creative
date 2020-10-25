@@ -138,4 +138,8 @@ class Const{
  
  //会話
  final static int CAPTION_NUM_PRE_BOSS = 27;
+ 
+  //背景色（グレイスケール）
+  final static int BACKGROUND_COLOR_NORMAL = 0;
+  final static int BACKGROUND_COLOR_BLACKOUT = 25;
 }

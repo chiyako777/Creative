@@ -14,6 +14,7 @@ ArrayList<Stage> stageList;
 Music music;
 Image img;
 Scenario scenario;
+color bgCol;
 
 void setup(){
   
@@ -25,6 +26,7 @@ void setup(){
   music = new Music(this);
   img = new Image();
   scenario = new Scenario();
+  bgCol = color(0);
   
   /*自機生成*/
   player = new Player(width/2,height*4/5);
@@ -37,7 +39,7 @@ void setup(){
 }
 
 void draw(){
-  background(0);
+  background(bgCol);
   
   switch(sceneNo){
   

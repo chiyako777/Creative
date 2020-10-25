@@ -95,10 +95,10 @@ class Scenario{
         drawPlayerMessage("ぼくを　ころすの？");
         break;
       case 24:
-        drawBossMessage("まあ物理的には？\nらくに仕留めるからさ。");
+        drawBossMessage("からだのほうは、そうだね。");
         break;
       case 25:
-        drawPlayerMessage("それは　こまるよ　\nぼくは　なのはなの　さらだを　\nたべなきゃいけないもの");
+        drawPlayerMessage("それは　こまるよ　\nぼくは　なのはなの　さらだで　\nこれから　ゆうはんに　するんだ");
         break;
       case 26:
         drawBossMessage("仮想世界なら、\n何も食べなくても永遠に生きられるさ。");

@@ -529,14 +529,14 @@ class FlowerLikeLaserBulletHell extends BulletHell{
       drawCount++;
     }
     
-    //暗転（あとで外出し）
+    //暗転
     if(drawCount >= 12 && blackout < 45){
-      //println("暗転中");
-      background(25);
+      println("暗転開始");
+      bgCol = color(Const.BACKGROUND_COLOR_BLACKOUT);
       blackout++;
     }else if(blackout == 45){
-      //println("暗転終了");
-      background(0);
+      println("暗転終了");
+      bgCol = color(Const.BACKGROUND_COLOR_NORMAL);
       blackout++;
     }
     
