@@ -90,10 +90,15 @@ class Const{
   //レーザーステータス
   final static int LASER_STATUS_PRE = 1;    //予告状態
   final static int LASER_STATUS_SHOOT = 2;  //実ショット状態
+  
+  //レーザー動作ステータス
+  final static int LASER_MOVE_STATUS_STOP = 1;    //静止状態
+  final static int LASER_MOVE_STATUS_MOVE = 2;    //動きあり  
  
   //レーザー予告時間
   final static int LASER_PRE_TIME_NORMAL = 60;  //通常(60フレーム)
   final static int LASER_PRE_TIME_LONG = 120;  //長い(120フレーム)
+  final static int LASER_PRE_TIME_INVALID = -999;  //無効(=別途フラグ管理にて予告時間制御)
 
   //スコア
   final static int SCORE_BOSS_DEFEAT = 10141;  //ボス撃破

@@ -3,21 +3,25 @@ abstract class Laser{
 
   protected PVector startPoint;  //始点ベクトル
   protected PVector endPoint;    //終点ベクトル
+  protected PVector velocity;  //速度ベクトル
   protected PVector laserVector; //レーザーベクトル(当たり判定用)
   protected float laserRange;    //レーザー幅
   protected int status;          //ステータス
+  protected int moveStatus;      //動作ステータス
   protected int preTime;         //予告状態時間(フレーム数)
   protected int preTimeFinish;   //予告状態終了時間(フレーム数)
   protected color col;           //レーザー色
   
   //**コンストラクタ
-  Laser(PVector startPoint,PVector endPoint,float laserRange,int preTimeFinish,color col){
+  Laser(PVector startPoint,PVector endPoint,PVector velocity,float laserRange,int preTimeFinish,color col){
     
     this.startPoint = startPoint;
     this.endPoint = endPoint;
+    if(velocity != null){this.velocity = velocity;}else{this.velocity = new PVector(0.0,0.0);}
     this.laserRange = laserRange;
     this.preTimeFinish = preTimeFinish;
     this.status = Const.LASER_STATUS_PRE;
+    this.moveStatus = Const.LASER_MOVE_STATUS_STOP;
     this.preTime = 0;
     this.col = col;
     //当たり判定用ベクトル生成
@@ -84,11 +88,33 @@ abstract class Laser{
   void updateStatus(int preTimeFinish){
     
     //予告状態の終了判定
-    if(status == Const.LASER_STATUS_PRE && preTime >= preTimeFinish){
+    if(status == Const.LASER_STATUS_PRE 
+         && preTime >= preTimeFinish
+         && preTimeFinish != Const.LASER_PRE_TIME_INVALID){
       status = Const.LASER_STATUS_SHOOT;
     }
     
   }
+  
+  //**レーザーの位置更新
+  void updateLocation(){
+    //※速度ベクトルで動かすときに当処理を使用。それ以外は自前。
+    if(moveStatus == Const.LASER_MOVE_STATUS_MOVE){
+      startPoint.add(velocity);
+      endPoint.add(velocity);
+    }
+  }
+  
+  //**画面外に出ているかの判定
+  //boolean isOutOfScreen(){
+  //  if((startPoint.x < 0 || startPoint.x > width) && (startPoint.y < Const.HEIGHT_INFO || startPoint.y > height)){
+  //    if((endPoint.x < 0 || endPoint.x > width) && (endPoint.y < Const.HEIGHT_INFO || endPoint.y > height)){
+  //      return true;
+  //    }
+  //  }
+  //  return false;
+  //}  
+  
   
   /*getter,setter*/
   
@@ -100,6 +126,14 @@ abstract class Laser{
     return status;
   }
   
+  void setStatus(int status){
+    this.status = status;
+  }
+
+  void setMoveStatus(int moveStatus){
+    this.moveStatus = moveStatus;
+  }
+  
 }
 
 /*------------------------------------------------------------*/
@@ -107,8 +141,8 @@ abstract class Laser{
 class NormalLaser extends Laser{
   
   //**コンストラクタ
-  NormalLaser(PVector startPoint,PVector endPoint,float laserRange,int preTimeFinish,color col){
-    super(startPoint,endPoint,laserRange,preTimeFinish,col);
+  NormalLaser(PVector startPoint,PVector endPoint,PVector velocity,float laserRange,int preTimeFinish,color col){
+    super(startPoint,endPoint,velocity,laserRange,preTimeFinish,col);
   }
   
   void draw(){

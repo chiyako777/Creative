@@ -1,8 +1,8 @@
 /** ★★★うさぎシューティング★★★ **/
 
 //モード
-//int mode = Const.MODE_DEV;
-int mode = Const.MODE_PRO;
+int mode = Const.MODE_DEV;
+//int mode = Const.MODE_PRO;
 
 //シーン番号
 int sceneNo = Const.SCENE_NO_TITLE;

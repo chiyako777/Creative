@@ -395,6 +395,7 @@ class AllRoundLaserBulletHell extends BulletHell{
       float angle = (2*PI/this.num) * i;
       laserList.add(new NormalLaser(new PVector(this.enemyLocation.x,this.enemyLocation.y)
                                     ,new PVector((cos(angle)*this.laserLen)+this.enemyLocation.x,(sin(angle)*this.laserLen)+this.enemyLocation.y)
+                                    ,null
                                     ,laserRange
                                     ,Const.LASER_PRE_TIME_NORMAL,col));
     }
@@ -470,13 +471,98 @@ class WideLaserBulletHell extends BulletHell{
       for(int i=0; i<num; i++){
         float p = height/num * i + Const.HEIGHT_INFO;
         if(i%2 != 0){
-          laserList.add(new NormalLaser(new PVector(0,p),new PVector(width,random(p-150,p+150)),laserRange,Const.LASER_PRE_TIME_LONG,col));
+          laserList.add(new NormalLaser(new PVector(0,p),new PVector(width,random(p-150,p+150)),null,laserRange,Const.LASER_PRE_TIME_LONG,col));
         }else{
-          laserList.add(new NormalLaser(new PVector(0,random(p-150,p+150)),new PVector(width,p),laserRange,Const.LASER_PRE_TIME_LONG,col));
+          laserList.add(new NormalLaser(new PVector(0,random(p-150,p+150)),new PVector(width,p),null,laserRange,Const.LASER_PRE_TIME_LONG,col));
         }
       }
     }
     drawBulletHell();
   }
+  
+}
+
+/*------------------------------------------------------------*/
+/* 花型レーザー弾幕クラス（スペカ） */
+class FlowerLikeLaserBulletHell extends BulletHell{
+
+  ArrayList<PVector> locationList;  //位置情報
+  int num;          //花数
+  float laserLen;  //レーザー長
+  int drawCount = 0;  //描画回数
+  int blackout = 0;  //暗転
+  int myFrameCount = 0;
+  color col = color(72,151,216);
+  
+  FlowerLikeLaserBulletHell(int num,float laserLen){
+    super();
+    this.num = num;
+    this.laserLen = laserLen;
+    locationList = new ArrayList<PVector>();
+    createLocation();
+  }
+  
+  //**位置生成
+  void createLocation(){
+    for(int i=0; i<num; i++){
+      locationList.add(new PVector(random(50,550),random(150,400)));
+    }
+    num++;
+  }
+  
+  
+  //**弾幕を描画
+  void draw(int status){
+    
+    if(drawCount == 0){ myFrameCount = frameCount; }
+    
+    //レーザー生成
+    if(frameCount%5==0 && drawCount < 12){
+      float angle = 2*PI/12 * drawCount;
+      for(PVector loc : locationList){
+        laserList.add(new NormalLaser(
+                        new PVector(loc.x,loc.y)
+                        ,new PVector(cos(angle)*laserLen + loc.x,sin(angle)*laserLen + loc.y)
+                        ,new PVector(cos(angle)*3.5,sin(angle)*3.5)
+                        ,3,Const.LASER_PRE_TIME_INVALID,col));
+      }
+      drawCount++;
+    }
+    
+    //暗転（あとで外出し）
+    if(drawCount >= 12 && blackout < 45){
+      //println("暗転中");
+      background(25);
+      blackout++;
+    }else if(blackout == 45){
+      //println("暗転終了");
+      background(0);
+      blackout++;
+    }
+    
+    //レーザー有効化
+    if(drawCount >= 12 && blackout == 46){ 
+      for(Laser l : laserList){ 
+        l.setStatus(Const.LASER_STATUS_SHOOT);
+        l.setMoveStatus(Const.LASER_MOVE_STATUS_MOVE);
+      }
+      blackout++;
+      myFrameCount = frameCount;
+    }
+    
+    drawBulletHell();
+    
+    //弾幕リフレッシュ
+    if((frameCount-myFrameCount)>=240){
+      println("弾幕リフレッシュ");
+      laserList.clear();
+      locationList.clear();
+      drawCount = 0;
+      blackout = 0;
+      createLocation();
+    }
+    
+  } 
+  
   
 }

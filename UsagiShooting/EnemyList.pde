@@ -314,3 +314,28 @@ class Boss003 extends Enemy{
   }
   
 }
+
+/*------------------------------------------------------------*/
+/*ボス敵機　スペルカード:花型レーザーっぽいやつ　*/
+class Boss004 extends Enemy{
+  
+  Boss004(float hp,PVector location,PVector direction,int timeout,boolean bulletRemainFlg,boolean bossFlg){
+    super(hp,location,direction,timeout,bulletRemainFlg,bossFlg);
+    range = 10.0;
+    bulletHellList.add(new FlowerLikeLaserBulletHell(5,150));
+  }
+  
+  //**敵機の位置を更新
+  void updateLocation(){
+    location.add(direction);
+  }
+  
+  //**敵機を描画
+  void draw(){
+    if(status == Const.STATUS_ENEMY_ACTIVE){
+      drawBoss();
+      activeTime += 1;
+    }
+  }
+  
+}

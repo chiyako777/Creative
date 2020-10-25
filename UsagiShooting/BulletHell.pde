@@ -28,6 +28,7 @@ abstract class BulletHell{
     //レーザー
     if(laserList.size() != 0){
       for(Laser l : laserList){
+        l.updateLocation();
         l.draw();
       }
     }
@@ -69,6 +70,11 @@ abstract class BulletHell{
         bulletList.remove(i);
       }
     }
+    //for(int i=0; i<laserList.size(); i++){
+    //  if(laserList.get(i).isOutOfScreen()){
+    //    laserList.remove(i);
+    //  }
+    //}
   }
   
   //**弾幕を全消去
