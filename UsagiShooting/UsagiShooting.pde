@@ -1,8 +1,8 @@
 /** ★★★うさぎシューティング★★★ **/
 
 //モード
-int mode = Const.MODE_DEV;
-//int mode = Const.MODE_PRO;
+//int mode = Const.MODE_DEV;
+int mode = Const.MODE_PRO;
 
 //シーン番号
 int sceneNo = Const.SCENE_NO_TITLE;
@@ -15,6 +15,7 @@ Music music;
 Image img;
 Scenario scenario;
 color bgCol;
+GameOver gameOver;
 
 void setup(){
   
@@ -23,6 +24,7 @@ void setup(){
   textFont(font);
   
   op = new Opening();
+  gameOver = new GameOver();
   music = new Music(this);
   img = new Image();
   scenario = new Scenario();
@@ -82,7 +84,8 @@ void draw(){
        
      case Const.SCENE_NO_GAMEOVER:
        /*ゲームオーバー*/
-       drawGameOver();
+       gameOver.enableCountFlg();
+       gameOver.drawGameOver();
        break;
   }
 }
@@ -164,18 +167,6 @@ void drawTitle(){
   
   if(keyPressed){
     sceneNo = Const.SCENE_NO_OPENING;
-  }
-}
-
-//**ゲームオーバー画面を再生
-void drawGameOver(){
-  fill(255);
-  textSize(30);
-  text("game over(pless any key to Retry!)",50,370);
-  
-  //リトライ
-  if(keyPressed){
-    retry();
   }
 }
 

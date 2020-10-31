@@ -211,10 +211,10 @@ class BossChapter extends Chapter{
 
   //**敵を生成
   void createEnemy(Player player){
-    //enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false,true));
-    //enemyList.add(new Boss002(300,new PVector(width/2,250),new PVector(0,0),1800,false,true));
-    //enemyList.add(new Boss003(600,new PVector(width/2,100),new PVector(0,0),3600,false,true));
-    enemyList.add(new Boss004(1200,new PVector(width/2,100),new PVector(0,0),3600,false,true));
+    enemyList.add(new Boss001(1200,new PVector(width/2,100),new PVector(0,0),3600,false,true));
+    enemyList.add(new Boss002(300,new PVector(width/2,250),new PVector(0,0),1800,false,true));
+    enemyList.add(new Boss003(600,new PVector(width/2,100),new PVector(0,0),3600,false,true));
+    enemyList.add(new Boss004(2400,new PVector(width/2,100),new PVector(0,0),3600,false,true));
   }
   
   //**チャプターシナリオを実行+
