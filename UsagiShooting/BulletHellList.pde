@@ -55,7 +55,7 @@ class AllRoundBullletHell extends BulletHell{
 class TargetingBulletHell extends BulletHell{
     PVector enemyLocation;  //敵機位置
     PVector playerLocation;  //自機位置
-    color col = color(199,165,204);
+    color col = color(98,216,198);
   TargetingBulletHell(PVector enemyLocation,PVector playerLocation){
     super();
     this.enemyLocation = enemyLocation;

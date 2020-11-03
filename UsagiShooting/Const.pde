@@ -9,6 +9,7 @@ class Const{
   final static int MODE_PRO = 1;
   
   //シーン番号
+  final static int SCENE_NO_START = 99;
   final static int SCENE_NO_TITLE = 0;
   final static int SCENE_NO_OPENING = 1;
   final static int SCENE_NO_STAGE1 = 2;

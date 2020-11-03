@@ -5,7 +5,7 @@
 int mode = Const.MODE_PRO;
 
 //シーン番号
-int sceneNo = Const.SCENE_NO_TITLE;
+int sceneNo = Const.SCENE_NO_START;
 
 //オブジェクト
 Opening op;
@@ -27,8 +27,8 @@ void setup(){
   op = new Opening();
   title = new Title();
   gameOver = new GameOver();
-  music = new Music(this);
-  img = new Image();
+  //music = new Music(this);
+  //img = new Image();
   scenario = new Scenario();
   bgCol = color(0);
   
@@ -50,6 +50,15 @@ void draw(){
   
   switch(sceneNo){
   
+     case Const.SCENE_NO_START:
+       /*重そうな処理は先にローディング画面を出してから行う(あまり効果なし?）*/
+       fill(255);
+       textSize(30);
+       text("now loading...",50,370);       
+       music = new Music(this);
+       img = new Image();
+       sceneNo = Const.SCENE_NO_TITLE;
+       
      case Const.SCENE_NO_TITLE:
        /*タイトル*/
        drawTitle();
@@ -108,7 +117,7 @@ void keyReleased(){
   /* 自機ステータス制御 */
   player.updateStatusByKey(key,Const.KEY_FLG_RELEASE);
   /* 会話シーンを進める */
-  if(key==ENTER || key==RETURN){
+  if(sceneNo == Const.SCENE_NO_PRE_BOSS && (key==ENTER || key==RETURN)){
     scenario.moveToNext();
   }
 }
@@ -167,7 +176,7 @@ void execGame(Stage stage){
 //**タイトル画面を再生
 void drawTitle(){
   title.drawTitle();  
-  if(keyPressed){
+  if(keyPressed && (key==ENTER || key==RETURN)){
     sceneNo = Const.SCENE_NO_OPENING;
   }
 }

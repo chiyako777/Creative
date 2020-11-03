@@ -183,13 +183,24 @@ abstract class Enemy{
   //**敵機drawパターン1
   void draw1(){
       //println("draw1");
-      //noStroke();
+      noStroke();
       //fill(255,247,153,30);
       //ellipse(location.x,location.y,40,40);
       //fill(255,247,153,50);
       //ellipse(location.x,location.y,30,30);
       //fill(255,247,153,80);
       //ellipse(location.x,location.y,20,20);
+      
+      fill(255,255,255,30);
+      drawStar(location.x,location.y,22,6);
+      fill(255,255,255,50);
+      //drawStar(location.x,location.y,20,6);
+      //fill(255,255,255,70);
+      drawStar(location.x,location.y,19,6);
+      fill(255,255,255,80);
+      drawStar(location.x,location.y,14,6);
+      fill(255,255,255,90);
+      drawStar(location.x,location.y,10,6);
       
       
       
