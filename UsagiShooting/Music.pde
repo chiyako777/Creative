@@ -44,6 +44,7 @@ class Music{
     //bgm1 = new SoundFile(sketch,"野良猫は宇宙を目指した_2.mp3");
     //bgm1 = new SoundFile(sketch,"Hide-and-seek.mp3");
     bgm1 = new SoundFile(sketch,"Demystify Feast.mp3");
+    //bgm1 = new SoundFile(sketch,"ハートフェルトファンシー.mp3");
     hitPlayer = new SoundFile(sketch,"se_maoudamashii_magical19.mp3");
     defeteEnemy = new SoundFile(sketch,"se_maoudamashii_battle09.mp3");
     graze = new SoundFile(sketch,"firecracker1.mp3");

@@ -9,6 +9,7 @@ int sceneNo = Const.SCENE_NO_TITLE;
 
 //オブジェクト
 Opening op;
+Title title;
 Player player;
 ArrayList<Stage> stageList;
 Music music;
@@ -24,6 +25,7 @@ void setup(){
   textFont(font);
   
   op = new Opening();
+  title = new Title();
   gameOver = new GameOver();
   music = new Music(this);
   img = new Image();
@@ -37,6 +39,9 @@ void setup(){
   stageList = new ArrayList<Stage>();
   stageList.add(new Stage1());
   stageList.add(new Stage2());
+  
+  /*各種初期化*/
+  title.init();
 
 }
 
@@ -161,10 +166,7 @@ void execGame(Stage stage){
 
 //**タイトル画面を再生
 void drawTitle(){
-  fill(255);
-  textSize(30);
-  text("pless any key...",50,370);
-  
+  title.drawTitle();  
   if(keyPressed){
     sceneNo = Const.SCENE_NO_OPENING;
   }

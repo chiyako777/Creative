@@ -21,9 +21,7 @@ class Enemy001 extends Enemy{
   //**敵機を描画
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(255,247,153);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      draw1();
       activeTime += 1;
     }
   }
@@ -51,9 +49,7 @@ class Enemy002 extends Enemy{
   //**敵機を描画
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(255,247,153);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      draw1();
       activeTime += 1;
     }
   }
@@ -83,9 +79,7 @@ class Enemy003 extends Enemy{
   //**敵機を描画
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(255,247,153);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      draw1();
       activeTime += 1;
     }
   }
@@ -110,9 +104,7 @@ class Enemy004 extends Enemy{
   //**敵機を描画
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(255,247,153);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      draw1();
       activeTime += 1;
     }
   }
@@ -138,9 +130,7 @@ class Enemy005 extends Enemy{
   //**敵機を描画
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(255,247,153);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      draw1();
       activeTime += 1;
     }
   }
@@ -169,9 +159,7 @@ class Enemy006 extends Enemy{
   //**敵機を描画
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(255,247,153);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      draw1();
       activeTime += 1;
     }
   }  
@@ -202,9 +190,7 @@ class Enemy007 extends Enemy{
   //**敵機を描画
   void draw(){
     if(status == Const.STATUS_ENEMY_ACTIVE){
-      fill(255,247,153);
-      noStroke();
-      ellipse(location.x,location.y,20,20);
+      draw1();
       activeTime += 1;
     }
   }  

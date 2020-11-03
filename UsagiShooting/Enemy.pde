@@ -180,6 +180,21 @@ abstract class Enemy{
     println("addMissCount : " + missCount);
   }
   
+  //**敵機drawパターン1
+  void draw1(){
+      //println("draw1");
+      //noStroke();
+      //fill(255,247,153,30);
+      //ellipse(location.x,location.y,40,40);
+      //fill(255,247,153,50);
+      //ellipse(location.x,location.y,30,30);
+      //fill(255,247,153,80);
+      //ellipse(location.x,location.y,20,20);
+      
+      
+      
+  }
+  
   /*getter,setter*/
   int getStatus(){
     return status;
